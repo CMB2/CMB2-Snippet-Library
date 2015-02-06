@@ -5,4 +5,4 @@ This class is an example of how you can use CMB2 to create an Admin Theme Option
 
 Obviously replace all instances of `myprefix` with a unique project-specific prefix.
 
-[Check these instructions out](https://github.com/WebDevStudios/CMB2/issues/130#issuecomment-68160722) if you're looking to modify the form output of the `cmb2_metabox_form` function.
+[Check these snippets out](https://github.com/WebDevStudios/CMB2-Snippet-Library/tree/master/helper-functions) if you're looking to modify the form output of the `cmb2_metabox_form` function.
