@@ -10,7 +10,7 @@
  *
  *							There are two types available: options pre-built and one that uses a remote source.  To use the first option, simply build it like a select
  *							with the standard CMB2 "options" argument.  For a remote source, you will use the "source" argument that corresponds to an AJAX function.  
- *							Then, you pass in a "matching_function" to look up the selected autocomplete label using the CMB2 field value.
+ *							Then, you pass in a "matching_function" to look up the selected autocomplete value using the CMB2 field value.
  *
  *							It can also be used as a repeatable field if a "repeatable_class" argument is passed when constructing the field.  This argument is 
  *							necessary to allow for mapping the autocomplete jQuery UI calls to the appropriate field.
@@ -88,22 +88,21 @@ function autocomplete_cmb2_meta_boxes(array $meta_boxes) {
 /**
  * Gets the post title from the ID for mapping purposes in autocompletes.
  *
- * @param int ID
+ * @param int $id
  * @return string
  */
 function autocomplete_cmb2_get_post_title_from_id($id) {
-	$post = get_post($id);
-
-	if (empty($post)) {
+	if (empty($id)) {
 		return '';
 	}
+
+	$post = get_post($id);
 
 	return $post->post_title;
 }
 
 /**
- * Renders the autocomplete type.  Note you need to pass in repeatable_class in the arguments if you want the field to be repeatable,
- * because the JavaScript for CMB2 doesn't reset the ID in the script.
+ * Renders the autocomplete type
  *
  * @param CMB2_Field $field_object
  * @param string $escaped_value The value of this field passed through the escaping filter. It defaults to sanitize_text_field. 
@@ -115,12 +114,10 @@ function autocomplete_cmb2_get_post_title_from_id($id) {
  */
 function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $object_id, $object_type, $field_type_object) {
 
-	// Store the ID in a hidden field.
+	// Store the value in a hidden field.
 	echo $field_type_object->hidden();
 
 	$repeatable_class = $field_object->args['repeatable_class'];
-
-	// Only options or source.
 	$options = $field_object->args['options'];
 
 	// Set up the options or source PHP variables.
@@ -129,15 +126,9 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 		$value = $field_object->args['mapping_function']($field_object->escaped_value);
 	} else {
 
-		// Find out which one of the group it is.
-		for ($i = 0; $i < count($field_object->value); ++$i) {
-			if ($field_object->escaped_value === $field_object->value[$i]) {
-				break;
-			}
-		}
-
+		// Set the value.
 		if (empty($field_object->escaped_value)) {
-			$option = array('name' => '', 'value' => '');
+			$value = '';
 		} else {
 			foreach ($options as $option) {
 				if ($option['value'] == $field_object->escaped_value) {
@@ -148,17 +139,27 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 		}
 	}
 
-	// Set up the autocomplete field.
-	$id = $field_object->args['id'];
+	// Set up the autocomplete field.  Replace the '_' with '-' to not interfere with the ID from CMB2. 
+	$id = str_replace('_', '-', $field_object->args['id']);
 
 	if (isset($field_object->args['repeatable_class'])) { 
 
-		// Notice the ID has a dash and the hidden field has an underscore from CMB2.
-		$id = $field_object->args['id'].'-'.$i;
+		// Find out which one of the group it is.
+		for ($i = 0; $i < count($field_object->value); ++$i) {
+			if ($field_object->escaped_value === $field_object->value[$i]) {
+				break;
+			}
+		}
+
+		$id = $field_object->args['id']."-{$i}";
 	}
 
 	echo '<input size="50" id="'.$id.'" value="'.$value.'"'.
 		(!empty($repeatable_class) ? ' class="'.$repeatable_class.'"' : '').'/>';
+
+	if (!$field_object->args['repeatable'] && isset($field_object->args['desc'])) {
+		echo '<p class="cmb2-metabox-description">'.$field_object->args['desc'].'</p>';
+	}
 
 	// Now, set up the script.
 	?>
@@ -208,7 +209,7 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 							}
 						 });
 						} <?php } else {
-							echo 'options'; 
+							echo '["Apple", "Orange", "Grape"]'; 
 						} ?>
 			});
 
@@ -284,7 +285,7 @@ function autocomplete_cmb2_get_post_options_using_post_type($post_type, $include
  * to just enqueue it, because other plugins may put it in the footer.
  */
 function autocomplete_cmb2_admin_enqueue_scripts() {
-	wp_enqueue_script('jquery-ui-header', 'https://code.jquery.com/ui/1.11.2/jquery-ui.min.js');
+	wp_enqueue_script('jquery-ui-header', '//code.jquery.com/ui/1.11.2/jquery-ui.min.js');
 }
 
 /**
