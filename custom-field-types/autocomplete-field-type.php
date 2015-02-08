@@ -209,7 +209,7 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 							}
 						 });
 						} <?php } else {
-							echo '["Apple", "Orange", "Grape"]'; 
+							echo 'options'; 
 						} ?>
 			});
 
