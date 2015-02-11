@@ -157,6 +157,16 @@ $GLOBALS['myprefix_Admin'] = new myprefix_Admin();
 $GLOBALS['myprefix_Admin']->hooks();
 
 /**
+ * Helper function to get/return the myprefix_Admin object
+ * @since  0.1.0
+ * @return myprefix_Admin object
+ */
+function myprefix_Admin() {
+	global $myprefix_Admin;
+	return $myprefix_Admin;
+}
+
+/**
  * Wrapper function around cmb2_get_option
  * @since  0.1.0
  * @param  string  $key Options array key
