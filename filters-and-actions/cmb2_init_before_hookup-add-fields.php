@@ -3,7 +3,7 @@
  * This file demonstrates adding new fields to registered CMB2 metaboxes/objects
  */
 
-function _yourprefix_add_new_field_in_3rd_position() {
+function yourprefix_add_new_field_in_3rd_position() {
 
 	$prefix = '_yourprefix_demo_';
 
@@ -34,9 +34,9 @@ function _yourprefix_add_new_field_in_3rd_position() {
 	}
 
 }
-add_action( 'cmb2_init_before_hookup', '_yourprefix_add_new_field_in_3rd_position' );
+add_action( 'cmb2_init_before_hookup', 'yourprefix_add_new_field_in_3rd_position' );
 
-function _yourprefix_add_new_field_to_group() {
+function yourprefix_add_new_field_to_group() {
 	// Try to get a metabox w/ the id of '_yourprefix_group_metabox'
 	if ( $cmb_group_demo = CMB2_Boxes::get( '_yourprefix_group_metabox' ) ) {
 
@@ -54,4 +54,4 @@ function _yourprefix_add_new_field_to_group() {
 
 	}
  }
-add_action( 'cmb2_init_before_hookup', '_yourprefix_add_new_field_to_group' );
+add_action( 'cmb2_init_before_hookup', 'yourprefix_add_new_field_to_group' );
