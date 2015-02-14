@@ -3,7 +3,7 @@
  * This file demonstrates adding new fields to a registered CMB2 metaboxes during its "cmb2_init_{$cmb_id}" hook
  */
 
-function yourprefix_add_new_field_to_top( $cmb ) {
+function yourprefix_add_new_field_to_top_of_demo_metabox( $cmb ) {
 
 	$cmb->add_field(
 		array(
@@ -17,4 +17,4 @@ function yourprefix_add_new_field_to_top( $cmb ) {
 	);
 
 }
-add_action( 'cmb2_init__yourprefix_demo_metabox', 'yourprefix_add_new_field_to_top' );
+add_action( 'cmb2_init__yourprefix_demo_metabox', 'yourprefix_add_new_field_to_top_of_demo_metabox' );
