@@ -12,11 +12,14 @@ function _yourprefix_update_fields_properties() {
 	 * In this case, we'll remove the show_on_cb conditional callback
 	 * (to instead always display the field)
 	 *
-	 * If field exists, and property updated, it will return true
+	 * If field exists, and property updated, it will return the field id
 	 */
-	$success = $cmb->update_field_property( '_yourprefix_demo_text', 'show_on_cb', false );
+	$field_id = $cmb->update_field_property( '_yourprefix_demo_text', 'show_on_cb', false );
 
-	if ( $success ) {
+	/**
+	 * Always need to compare this value strictly to false, as a field_id COULD be 0 or ''
+	 */
+	if ( false !== $field_id ) {
 
 		/**
 		 * Because we don't want to 'stomp' a field's 'attributes' property

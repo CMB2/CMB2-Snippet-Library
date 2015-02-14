@@ -11,10 +11,13 @@ function _yourprefix_add_new_field_in_3rd_position() {
 	$cmb = CMB2_Boxes::get( '_yourprefix_demo_metabox' );
 
 	// This should return false because we don't have a '_yourprefix_demo_text2' field
-	$success = $cmb->update_field_property( '_yourprefix_demo_text2', 'type', 'text' );
+	$field_id = $cmb->update_field_property( '_yourprefix_demo_text2', 'type', 'text' );
 
-	// Since '_yourprefix_demo_text2' doesn't exist, Let's create it.
-	if ( ! $success ) {
+	/**
+	 * Since '_yourprefix_demo_text2' doesn't exist, Let's create it.
+	 * Always need to compare this value strictly to false, as a field_id COULD be 0 or ''
+	 */
+	if ( false === $field_id ) {
 		$cmb->add_field(
 			// Normal field setup
 			array(
