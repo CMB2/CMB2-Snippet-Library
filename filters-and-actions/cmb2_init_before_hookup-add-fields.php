@@ -8,7 +8,7 @@ function yourprefix_add_new_field_in_3rd_position() {
 	$prefix = '_yourprefix_demo_';
 
 	// Retrieve a CMB2 instance
-	$cmb = CMB2_Boxes::get( '_yourprefix_demo_metabox' );
+	$cmb = cmb2_get_metabox( '_yourprefix_demo_metabox' );
 
 	// This should return false because we don't have a '_yourprefix_demo_text2' field
 	$field_id = $cmb->update_field_property( '_yourprefix_demo_text2', 'type', 'text' );
@@ -38,7 +38,7 @@ add_action( 'cmb2_init_before_hookup', 'yourprefix_add_new_field_in_3rd_position
 
 function yourprefix_add_new_field_to_group() {
 	// Try to get a metabox w/ the id of '_yourprefix_group_metabox'
-	if ( $cmb_group_demo = CMB2_Boxes::get( '_yourprefix_group_metabox' ) ) {
+	if ( $cmb_group_demo = cmb2_get_metabox( '_yourprefix_group_metabox' ) ) {
 
 		$cmb_group_demo->add_field(
 			array(

@@ -5,7 +5,7 @@
 
 function yourprefix_update_fields_properties() {
 	// Retrieve a CMB2 instance
-	$cmb = CMB2_Boxes::get( '_yourprefix_demo_metabox' );
+	$cmb = cmb2_get_metabox( '_yourprefix_demo_metabox' );
 
 	/**
 	 * Update a property on the '_yourprefix_demo_text' field.
