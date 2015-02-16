@@ -42,23 +42,6 @@ class myprefix_Admin {
 	public function __construct() {
 		// Set our title
 		$this->title = __( 'Site Options', 'myprefix' );
-
-		// Set our CMB2 fields
-		$this->fields = array(
-			array(
-				'name' => __( 'Test Text', 'myprefix' ),
-				'desc' => __( 'field description (optional)', 'myprefix' ),
-				'id'   => 'test_text',
-				'type' => 'text',
-			),
-			array(
-				'name'    => __( 'Test Color Picker', 'myprefix' ),
-				'desc'    => __( 'field description (optional)', 'myprefix' ),
-				'id'      => 'test_colorpicker',
-				'type'    => 'colorpicker',
-				'default' => '#ffffff'
-			),
-		);
 	}
 
 	/**
@@ -68,7 +51,7 @@ class myprefix_Admin {
 	public function hooks() {
 		add_action( 'admin_init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
-		add_filter( 'cmb2_meta_boxes', array( $this, 'add_options_page_metabox' ) );
+		add_action( 'cmb2_init', array( $this, 'add_options_page_metabox' ) );
 	}
 
 
@@ -107,10 +90,36 @@ class myprefix_Admin {
 	 * @param  array $meta_boxes
 	 * @return array $meta_boxes
 	 */
-	function add_options_page_metabox( array $meta_boxes ) {
-		$meta_boxes[] = $this->option_metabox();
+	function add_options_page_metabox() {
 
-		return $meta_boxes;
+		$cmb = new_cmb2_box( array(
+			'id'      => $this->metabox_id,
+			'hookup'  => false,
+			'show_on' => array(
+				// These are important, don't remove
+				'key'   => 'options-page',
+				'value' => array( $this->key, )
+			),
+		) );
+
+		// Set our CMB2 fields
+
+		$cmb->add_field( array(
+			'name' => __( 'Test Text', 'myprefix' ),
+			'desc' => __( 'field description (optional)', 'myprefix' ),
+			'id'   => 'test_text',
+			'type' => 'text',
+			'default' => 'Default Text',
+		) );
+
+		$cmb->add_field( array(
+			'name'    => __( 'Test Color Picker', 'myprefix' ),
+			'desc'    => __( 'field description (optional)', 'myprefix' ),
+			'id'      => 'test_colorpicker',
+			'type'    => 'colorpicker',
+			'default' => '#bada55',
+		) );
+
 	}
 
 	/**
@@ -119,16 +128,7 @@ class myprefix_Admin {
 	 * @return array
 	 */
 	public function option_metabox() {
-		return array(
-			'id'      => $this->metabox_id,
-			'fields'  => $this->fields,
-			'hookup'  => false,
-			'show_on' => array(
-				// These are important, don't remove
-				'key'   => 'options-page',
-				'value' => array( $this->key, )
-			),
-		);
+		return ;
 	}
 
 	/**
@@ -141,10 +141,6 @@ class myprefix_Admin {
 		// Allowed fields to retrieve
 		if ( in_array( $field, array( 'key', 'metabox_id', 'fields', 'title', 'options_page' ), true ) ) {
 			return $this->{$field};
-		}
-
-		if ( 'option_metabox' === $field ) {
-			return $this->option_metabox();
 		}
 
 		throw new Exception( 'Invalid property: ' . $field );
