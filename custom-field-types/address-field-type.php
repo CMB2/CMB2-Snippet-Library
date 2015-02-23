@@ -133,7 +133,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 	echo $field_type_object->_desc( true );
 
 }
-add_filter( 'cmb2_render_address', 'jt_cmb2_render_address_field_callback', 10, 5 );
+add_filter( 'cmb2_render_address_field', 'jt_cmb2_render_address_field_callback', 10, 5 );
 
 
 /**
