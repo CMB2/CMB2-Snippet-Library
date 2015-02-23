@@ -18,12 +18,6 @@ class myprefix_Admin {
 	private $metabox_id = 'myprefix_option_metabox';
 
 	/**
-	 * Array of metaboxes/fields
-	 * @var array
-	 */
-	protected $option_metabox = array();
-
-	/**
 	 * Options Page title
 	 * @var string
 	 */
@@ -120,15 +114,6 @@ class myprefix_Admin {
 			'default' => '#bada55',
 		) );
 
-	}
-
-	/**
-	 * Defines the theme option metabox and field configuration
-	 * @since  0.1.0
-	 * @return array
-	 */
-	public function option_metabox() {
-		return ;
 	}
 
 	/**
