@@ -81,8 +81,6 @@ class myprefix_Admin {
 	/**
 	 * Add the options metabox to the array of metaboxes
 	 * @since  0.1.0
-	 * @param  array $meta_boxes
-	 * @return array $meta_boxes
 	 */
 	function add_options_page_metabox() {
 
@@ -124,7 +122,7 @@ class myprefix_Admin {
 	 */
 	public function __get( $field ) {
 		// Allowed fields to retrieve
-		if ( in_array( $field, array( 'key', 'metabox_id', 'fields', 'title', 'options_page' ), true ) ) {
+		if ( in_array( $field, array( 'key', 'metabox_id', 'title', 'options_page' ), true ) ) {
 			return $this->{$field};
 		}
 
