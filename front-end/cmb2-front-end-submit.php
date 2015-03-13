@@ -13,6 +13,7 @@ function wds_frontend_form_register() {
 		'id'           => 'front-end-post-form',
 		'object_types' => array( 'post' ),
 		'hookup'       => false,
+		'save_fields'  => false,
 	) );
 
 	$cmb->add_field( array(
@@ -171,7 +172,7 @@ function wds_handle_frontend_new_post_form_submission( $cmb, $post_data = array(
 	unset( $post_data['post_status'] );
 
 	// Try to upload the featured image
-	$img_id = wds_frontend_form_photo_upload( $post_id, $post_data );
+	$img_id = wds_frontend_form_photo_upload( $new_submission_id, $post_data );
 
 	// If our photo upload was successful, set the featured image
 	if ( $img_id && ! is_wp_error( $img_id ) ) {
