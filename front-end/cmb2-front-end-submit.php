@@ -79,11 +79,14 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 	// Get CMB2 metabox object
 	$cmb = cmb2_get_metabox( $metabox_id, $object_id );
 
+	// Get $cmb object_types
+	$post_types = $cmb->prop( 'object_types' );
+
 	// Parse attributes
 	$atts = shortcode_atts( array(
 		'post_author' => $user_id ? $user_id : 1, // Current user, or admin
 		'post_status' => 'pending',
-		'post_type'   => array_shift( $cmb->prop( 'object_types' ) ), // Default to first $cmb object_types type
+		'post_type'   => reset( $post_types ), // Only use first object_type in array
 	), $atts, 'cmb-frontend-form' );
 
 	// Initiate our output variable
