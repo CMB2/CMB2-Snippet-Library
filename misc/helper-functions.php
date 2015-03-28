@@ -1,6 +1,6 @@
 <?php
 /**
- * Misc. CMB2 Helper functions
+ * Miscellaneous CMB2 Helper functions
  */
 
 
