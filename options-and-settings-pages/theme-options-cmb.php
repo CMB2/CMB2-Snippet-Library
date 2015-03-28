@@ -131,18 +131,19 @@ class Myprefix_Admin {
 
 }
 
-// Get it started
-$GLOBALS['Myprefix_Admin'] = new Myprefix_Admin();
-$GLOBALS['Myprefix_Admin']->hooks();
-
 /**
  * Helper function to get/return the Myprefix_Admin object
  * @since  0.1.0
  * @return Myprefix_Admin object
  */
 function myprefix_admin() {
-	global $Myprefix_Admin;
-	return $Myprefix_Admin;
+	static $object = null;
+	if ( is_null( $object ) ) {
+		$object = new Myprefix_Admin();
+		$object->hooks();
+	}
+
+	return $object;
 }
 
 /**
@@ -152,6 +153,8 @@ function myprefix_admin() {
  * @return mixed        Option value
  */
 function myprefix_get_option( $key = '' ) {
-	global $Myprefix_Admin;
-	return cmb2_get_option( $Myprefix_Admin->key, $key );
+	return cmb2_get_option( myprefix_admin()->key, $key );
 }
+
+// Get it started
+myprefix_admin();
