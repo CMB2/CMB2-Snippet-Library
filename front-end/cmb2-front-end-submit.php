@@ -1,7 +1,6 @@
 <?php
 /**
- * Original tutorial:
- * @link
+ * @link http://webdevstudios.com/2015/03/30/using-cmb2-to-create-a-post-submission-form Original tutorial
  */
 
 
