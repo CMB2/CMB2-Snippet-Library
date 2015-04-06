@@ -32,7 +32,7 @@ function jt_cmb2_do_frontend_form_shortcode( $atts = array() ) {
 
     // If no metabox id is set, yell about it
     if ( empty( $atts['id'] ) ) {
-        return 'Please add an 'id' attribute to specify the CMB2 form to display.';
+        return 'Please add an "id" attribute to specify the CMB2 form to display.';
     }
 
     $metabox_id = esc_attr( $atts['id'] );

@@ -3,7 +3,7 @@
  * CMB2 Theme Options
  * @version 0.1.0
  */
-class myprefix_Admin {
+class Myprefix_Admin {
 
 	/**
  	 * Option key, and option page slug
@@ -71,7 +71,7 @@ class myprefix_Admin {
 	 */
 	public function admin_page_display() {
 		?>
-		<div class="wrap cmb2_options_page <?php echo $this->key; ?>">
+		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
 			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
 		</div>
@@ -131,18 +131,19 @@ class myprefix_Admin {
 
 }
 
-// Get it started
-$GLOBALS['myprefix_Admin'] = new myprefix_Admin();
-$GLOBALS['myprefix_Admin']->hooks();
-
 /**
- * Helper function to get/return the myprefix_Admin object
+ * Helper function to get/return the Myprefix_Admin object
  * @since  0.1.0
- * @return myprefix_Admin object
+ * @return Myprefix_Admin object
  */
-function myprefix_Admin() {
-	global $myprefix_Admin;
-	return $myprefix_Admin;
+function myprefix_admin() {
+	static $object = null;
+	if ( is_null( $object ) ) {
+		$object = new Myprefix_Admin();
+		$object->hooks();
+	}
+
+	return $object;
 }
 
 /**
@@ -152,6 +153,8 @@ function myprefix_Admin() {
  * @return mixed        Option value
  */
 function myprefix_get_option( $key = '' ) {
-	global $myprefix_Admin;
-	return cmb2_get_option( $myprefix_Admin->key, $key );
+	return cmb2_get_option( myprefix_admin()->key, $key );
 }
+
+// Get it started
+myprefix_admin();
