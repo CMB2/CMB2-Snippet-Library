@@ -63,6 +63,7 @@ class Myprefix_Admin {
 	 */
 	public function add_options_page() {
 		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
+		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
 	}
 
 	/**
