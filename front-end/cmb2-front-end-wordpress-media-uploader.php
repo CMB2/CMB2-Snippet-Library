@@ -1,7 +1,7 @@
 <?php
 /**
  * Use the WordPress Media Uploader on the frontend. Limit to only displaying current
- * user's uploaded media.
+ * user's uploaded media. Props [@vasikgreif](https://github.com/vasikgreif)
  * @link https://github.com/WebDevStudios/CMB2/issues/283 Original concept
  */
 
