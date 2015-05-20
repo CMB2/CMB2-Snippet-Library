@@ -2,6 +2,7 @@
 /**
  * Use the WordPress Media Uploader on the frontend. Limit to only displaying current
  * user's uploaded media. Props [@vasikgreif](https://github.com/vasikgreif)
+ *
  * @link https://github.com/WebDevStudios/CMB2/issues/283 Original concept
  */
 
@@ -30,7 +31,7 @@ add_action( 'init', 'nevestam_allow_contributor_uploads' );
 /**
  * Display only user-uploaded files to each user
  */
-function ml_restrict_media_library( $wp_query_obj ) {
+function nevestam_restrict_media_library( $wp_query_obj ) {
 	global $current_user, $pagenow;
 
 	if ( ! is_a( $current_user, 'WP_User') ) {
@@ -45,4 +46,4 @@ function ml_restrict_media_library( $wp_query_obj ) {
 		$wp_query_obj->set( 'author', $current_user->ID );
 	}
 }
-add_action( 'pre_get_posts', 'ml_restrict_media_library' );
+add_action( 'pre_get_posts', 'nevestam_restrict_media_library' );
