@@ -59,6 +59,22 @@ function wds_frontend_form_register() {
 add_action( 'cmb2_init', 'wds_frontend_form_register' );
 
 /**
+ * Gets the front-end-post-form cmb instance
+ *
+ * @return CMB2 object
+ */
+function wds_frontend_cmb2_get() {
+	// Use ID of metabox in wds_frontend_form_register
+	$metabox_id = 'front-end-post-form';
+
+	// Post/object ID is not applicable since we're using this form for submission
+	$object_id  = 'fake-oject-id';
+
+	// Get CMB2 metabox object
+	return cmb2_get_metabox( $metabox_id, $object_id );
+}
+
+/**
  * Handle the cmb-frontend-form shortcode
  *
  * @param  array  $atts Array of shortcode attributes
@@ -66,20 +82,14 @@ add_action( 'cmb2_init', 'wds_frontend_form_register' );
  */
 function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 
-	// Current user
-	$user_id = get_current_user_id();
-
-	// Use ID of metabox in wds_frontend_form_register
-	$metabox_id = 'front-end-post-form';
-
-	// since post ID will not exist yet, just need to pass it something
-	$object_id  = 'fake-oject-id';
-
 	// Get CMB2 metabox object
-	$cmb = cmb2_get_metabox( $metabox_id, $object_id );
+	$cmb = wds_frontend_cmb2_get();
 
 	// Get $cmb object_types
 	$post_types = $cmb->prop( 'object_types' );
+
+	// Current user
+	$user_id = get_current_user_id();
 
 	// Parse attributes
 	$atts = shortcode_atts( array(
@@ -88,63 +98,85 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 		'post_type'   => reset( $post_types ), // Only use first object_type in array
 	), $atts, 'cmb-frontend-form' );
 
+	/*
+	 * Let's add these attributes as hidden fields to our cmb form
+	 * so that they will be passed through to our form submission
+	 */
+	foreach ( $atts as $key => $value ) {
+		$cmb->add_hidden_field( array(
+			'field_args'  => array(
+				'id'    => "atts[$key]",
+				'type'  => 'hidden',
+				'default' => $value,
+			),
+		) );
+	}
+
 	// Initiate our output variable
 	$output = '';
 
-	// Handle form saving (if form has been submitted)
-	$new_id = wds_handle_frontend_new_post_form_submission( $cmb, $atts );
+	// Get any submission errors
+	if ( ( $error = $cmb->prop( 'submission_error' ) ) && is_wp_error( $error ) ) {
+		// If there was an error with the submission, add it to our ouput.
+		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wds-post-submit' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
+	}
 
-	if ( $new_id ) {
+	// If the post was submitted successfully, notify the user.
+	if ( isset( $_GET['post_submitted'] ) && ( $post = get_post( absint( $_GET['post_submitted'] ) ) ) ) {
 
-		if ( is_wp_error( $new_id ) ) {
+		// Get submitter's name
+		$name = get_post_meta( $post->ID, 'submitted_author_name', 1 );
+		$name = $name ? ' '. $name : '';
 
-			// If there was an error with the submission, add it to our ouput.
-			$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wds-post-submit' ), '<strong>'. $new_id->get_error_message() .'</strong>' ) . '</h3>';
-
-		} else {
-
-			// Get submitter's name
-			$name = isset( $_POST['submitted_author_name'] ) && $_POST['submitted_author_name']
-				? ' '. $_POST['submitted_author_name']
-				: '';
-
-			// Add notice of submission
-			$output .= '<h3>' . sprintf( __( 'Thank you %s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>';
-		}
-
+		// Add notice of submission to our output
+		$output .= '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>';
 	}
 
 	// Get our form
-	$output .= cmb2_get_metabox_form( $cmb, $object_id, array( 'save_button' => __( 'Submit Post', 'wds-post-submit' ) ) );
+	$output .= cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Post', 'wds-post-submit' ) ) );
 
 	return $output;
 }
 add_shortcode( 'cmb-frontend-form', 'wds_do_frontend_form_submission_shortcode' );
 
 /**
- * Handles form submission on save
+ * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
  *
- * @param  CMB2  $cmb       The CMB2 object
- * @param  array $post_data Array of post-data for new post
- * @return mixed            New post ID if successful
+ * @return void
  */
-function wds_handle_frontend_new_post_form_submission( $cmb, $post_data = array() ) {
+function wds_handle_frontend_new_post_form_submission() {
 
 	// If no form submission, bail
-	if ( empty( $_POST ) ) {
+	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
 		return false;
 	}
 
-	// check required $_POST variables and security nonce
-	if (
-		! isset( $_POST['submit-cmb'], $_POST['object_id'], $_POST[ $cmb->nonce() ] )
-		|| ! wp_verify_nonce( $_POST[ $cmb->nonce() ], $cmb->nonce() )
-	) {
-		return new WP_Error( 'security_fail', __( 'Security check failed.' ) );
+	// Get CMB2 metabox object
+	$cmb = wds_frontend_cmb2_get();
+
+	$post_data = array();
+
+	// Get our shortcode attributes and set them as our initial post_data args
+	if ( isset( $_POST['atts'] ) ) {
+		foreach ( (array) $_POST['atts'] as $key => $value ) {
+			$post_data[ $key ] = sanitize_text_field( $value );
+		}
+		unset( $_POST['atts'] );
 	}
 
+	// Check security nonce
+	if ( ! isset( $_POST[ $cmb->nonce() ] ) || ! wp_verify_nonce( $_POST[ $cmb->nonce() ], $cmb->nonce() ) ) {
+		return $cmb->prop( 'submission_error', new WP_Error( 'security_fail', __( 'Security check failed.' ) ) );
+	}
+
+	// Check title submitted
 	if ( empty( $_POST['submitted_post_title'] ) ) {
-		return new WP_Error( 'post_data_missing', __( 'New post requires a title.' ) );
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'New post requires a title.' ) ) );
+	}
+
+	// And that the title is not the default title
+	if ( $cmb->get_field( 'submitted_post_title' )->default() == $_POST['submitted_post_title'] ) {
+		return $cmb->prop( 'submission_error', new WP_Error( 'post_data_missing', __( 'Please enter a new title.' ) ) );
 	}
 
 	/**
@@ -163,7 +195,7 @@ function wds_handle_frontend_new_post_form_submission( $cmb, $post_data = array(
 
 	// If we hit a snag, update the user
 	if ( is_wp_error( $new_submission_id ) ) {
-		return $new_submission_id;
+		return $cmb->prop( 'submission_error', $new_submission_id );
 	}
 
 	/**
@@ -186,8 +218,14 @@ function wds_handle_frontend_new_post_form_submission( $cmb, $post_data = array(
 		update_post_meta( $new_submission_id, $key, $value );
 	}
 
-	return $new_submission_id;
+	/*
+	 * Redirect back to the form page with a query variable with the new post ID.
+	 * This will help double-submissions with browser refreshes
+	 */
+	wp_redirect( esc_url_raw( add_query_arg( 'post_submitted', $new_submission_id ) ) );
+	exit;
 }
+add_action( 'cmb2_after_init', 'wds_handle_frontend_new_post_form_submission' );
 
 /**
  * Handles uploading a file to a WordPress post
