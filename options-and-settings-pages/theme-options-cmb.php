@@ -63,7 +63,9 @@ class Myprefix_Admin {
 	 */
 	public function add_options_page() {
 		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
-		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
+
+		// Include CMB CSS in the head to avoid FOUT
+		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
 	/**
@@ -74,7 +76,7 @@ class Myprefix_Admin {
 		?>
 		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
+			<?php cmb2_metabox_form( $this->metabox_id, $this->key, array( 'cmb_styles' => false ) ); ?>
 		</div>
 		<?php
 	}
