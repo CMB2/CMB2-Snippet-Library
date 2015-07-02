@@ -215,7 +215,13 @@ function wds_handle_frontend_new_post_form_submission() {
 
 	// Loop through remaining (sanitized) data, and save to post-meta
 	foreach ( $sanitized_values as $key => $value ) {
-		update_post_meta( $new_submission_id, $key, $value );
+		if( is_array( $value ) ) {
+			if( !empty( array_filter( $value ) ) ) {
+				update_post_meta( $new_submission_id, $key, $value );
+			}
+		} else {
+			update_post_meta( $new_submission_id, $key, $value );
+		}
 	}
 
 	/*
