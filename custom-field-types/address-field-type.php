@@ -135,6 +135,31 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 }
 add_filter( 'cmb2_render_address', 'jt_cmb2_render_address_field_callback', 10, 5 );
 
+/**
+ * Optionally save the Address values into separate fields
+ */
+function split_address_values( $override_value, $value, $object_id, $field_args ) {
+    if ( isset( $field_args['split_values'] ) && $field_args['split_values'] ) {
+        if ( ! empty( $value['address-1'] ) ) {
+            update_post_meta( $object_id, $field_args['id'] . '_street_address', $value['address-1'] );
+        }
+        if ( ! empty( $value['address-2'] ) ) {
+            update_post_meta( $object_id, $field_args['id'] . '_street_address_2', $value['address-2'] );
+        }
+        if ( ! empty( $value['city'] ) ) {
+            update_post_meta( $object_id, $field_args['id'] . '_city', $value['city'] );
+        }
+        if ( ! empty( $value['state'] ) ) {
+            update_post_meta( $object_id, $field_args['id'] . '_state', $value['state'] );
+        }
+        if ( ! empty( $value['zip'] ) ) {
+            update_post_meta( $object_id, $field_args['id'] . '_zip', $value['zip'] );
+        }
+    }
+
+    return $value;
+}
+add_filter( 'cmb2_sanitize_address', 'split_address_values', 12, 5 );
 
 /**
  * The following snippets are required for allowing the address field
