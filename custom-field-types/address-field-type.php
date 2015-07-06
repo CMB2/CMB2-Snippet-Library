@@ -135,6 +135,27 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 }
 add_filter( 'cmb2_render_address', 'jt_cmb2_render_address_field_callback', 10, 5 );
 
+/**
+ * Optionally save the Address values into separate fields
+ */
+function cmb2_split_address_values( $override_value, $value, $object_id, $field_args ) {
+	if ( ! isset( $field_args['split_values'] ) || ! $field_args['split_values'] ) {
+		// Don't do the override
+		return $override_value
+	}
+
+	$address_keys = array( 'address-1', 'address-2', 'city', 'state', 'zip' );
+
+	foreach ( $address_keys as $key ) {
+		if ( ! empty( $value[ $key ] ) ) {
+			update_post_meta( $object_id, $field_args['id'] . 'addr_'. $key, $value[ $key ] );
+		}
+	}
+
+	// Tell CMB2 we already did the update
+	return true;
+}
+add_filter( 'cmb2_sanitize_address', 'cmb2_split_address_values', 12, 4 );
 
 /**
  * The following snippets are required for allowing the address field
