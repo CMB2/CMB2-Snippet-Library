@@ -141,7 +141,7 @@ add_filter( 'cmb2_render_address', 'jt_cmb2_render_address_field_callback', 10, 
 function cmb2_split_address_values( $override_value, $value, $object_id, $field_args ) {
 	if ( ! isset( $field_args['split_values'] ) || ! $field_args['split_values'] ) {
 		// Don't do the override
-		return $override_value
+		return $override_value;
 	}
 
 	$address_keys = array( 'address-1', 'address-2', 'city', 'state', 'zip' );
