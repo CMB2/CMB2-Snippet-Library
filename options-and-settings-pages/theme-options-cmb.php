@@ -76,7 +76,7 @@ class Myprefix_Admin {
 		?>
 		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
 			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php cmb2_metabox_form( $this->metabox_id, $this->key, array( 'cmb_styles' => false ) ); ?>
+			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
 		</div>
 		<?php
 	}
@@ -88,9 +88,10 @@ class Myprefix_Admin {
 	function add_options_page_metabox() {
 
 		$cmb = new_cmb2_box( array(
-			'id'      => $this->metabox_id,
-			'hookup'  => false,
-			'show_on' => array(
+			'id'         => $this->metabox_id,
+			'hookup'     => false,
+			'cmb_styles' => false,
+			'show_on'    => array(
 				// These are important, don't remove
 				'key'   => 'options-page',
 				'value' => array( $this->key, )
