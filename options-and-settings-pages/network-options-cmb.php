@@ -178,4 +178,4 @@ function myprefix_get_network_option( $key = '' ) {
 }
 
 // Get it started
-myprefix_admin();
+myprefix_network_admin();
