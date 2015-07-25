@@ -43,7 +43,7 @@ function eh_cmb2_get_star_rating_field( $metakey, $post_id = 0 ) {
 				$rating++;
 			}
 		}
-	$stars_container .= '<section class="cmb2-star-container">';
+	$stars_container .= '</section>';
 	wp_enqueue_style( 'dashicons' );
 	return $stars_container;
 }
