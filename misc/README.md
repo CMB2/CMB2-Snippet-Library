@@ -1,4 +1,4 @@
 Miscellaneous Snippets
 ==========
 
-Randome CMB2 and WordPress snippets
+Random CMB2 and WordPress snippets
