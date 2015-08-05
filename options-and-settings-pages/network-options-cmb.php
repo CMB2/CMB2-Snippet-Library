@@ -67,7 +67,10 @@ class Myprefix_Network_Admin {
 	 */
 	public function add_options_page() {
 		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
+
 		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
+		// Include CMB CSS in the head to avoid FOUT
+		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
 	/**
@@ -90,9 +93,10 @@ class Myprefix_Network_Admin {
 	function add_options_page_metabox() {
 
 		$cmb = new_cmb2_box( array(
-			'id'      => $this->metabox_id,
-			'hookup'  => false,
-			'show_on' => array(
+			'id'         => $this->metabox_id,
+			'hookup'     => false,
+			'cmb_styles' => false,
+			'show_on'    => array(
 				// These are important, don't remove
 				'key'   => 'options-page',
 				'value' => array( $this->key, )
