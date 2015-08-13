@@ -33,7 +33,7 @@ function cmb_render_multicheck_title( $field, $escaped_value, $object_id, $objec
 				    'name' => $field->args[ '_name' ] . '[]',
 				);
 
-				if ( in_array( $field, $values ) ) {
+				if ( in_array( $extra_field, $values) ) {
 					$args[ 'checked' ] = 'checked';
 				}
 				$options .= $field_type_object->list_input( $args, $i );
