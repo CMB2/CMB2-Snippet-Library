@@ -15,7 +15,7 @@ $cmb->add_field( array(
 */
 
 // render Title multicheck
-add_action( 'cmb2_render_multicheck_title', 'cmb_render_title_multicheck', 10, 5 );
+add_action( 'cmb2_render_multicheck_title', 'cmb_render_multicheck_title', 10, 5 );
 
 function cmb_render_multicheck_title( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 	$data_field = $field->args[ 'data' ];
