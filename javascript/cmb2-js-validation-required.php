@@ -1,64 +1,14 @@
 <?php
 /*
- * Plugin Name: CMB2 JS require field
- * Description: This feature was removed in CMB2 2.0.3. Install this plugin to re-activate.
- * Author: jtsternberg
- * Author URI: http://dsgnwrks.pro
+ * Plugin Name: CMB2 js validation for "required" fields
+ * Description: Uses js to validate CMB2 fields that have the 'data-validation' attribute set to 'required'
  * Version: 0.1.0
  */
 
 /**
- * Hook in and add a validation demo metabox.
+ * Documentation in the wiki:
+ * @link https://github.com/WebDevStudios/CMB2/wiki/Plugin-code-to-add-JS-validation-of-%22required%22-fields
  */
-function cmb2_sample_js_validation() {
-
-	$prefix = 'js_validation_demo_';
-
-	/**
-	 * Sample metabox to demonstrate each field type included
-	 */
-	$cmb_demo = new_cmb2_box( array(
-		'id'            => $prefix . 'metabox',
-		'title'         => __( 'Test Metabox', 'cmb2' ),
-		'object_types'  => array( 'page', ), // Post type
-	) );
-
- 	$cmb_demo->add_field( array(
-		'name'       => __( 'Text', 'cmb2' ),
-		'id'         => $prefix . 'text',
-		'type'       => 'text',
-		'attributes' => array(
-			'data-validation' => 'required',
-			// 'required' => 'required',
-		),
-	) );
-
-	$cmb_demo->add_field( array(
-		'name'       => __( 'Test Image', 'cmb2' ),
-		'id'         => $prefix . 'image',
-		'type'       => 'file',
-		'options' => array(
-			'url' => false,
-		),
-		'attributes' => array(
-			'data-validation' => 'required',
-			'required' => 'required',
-		),
-	) );
-
-	$cmb_demo->add_field( array(
-		'name'         => __( 'Multiple Files', 'cmb2' ),
-		'desc'         => __( 'Upload or add multiple images/attachments.', 'cmb2' ),
-		'id'           => $prefix . 'file_list',
-		'type'         => 'file_list',
-		'preview_size' => array( 100, 100 ), // Default: array( 50, 50 )
-		'attributes' => array(
-			'data-validation' => 'required',
-		),
-	) );
-
-}
-add_action( 'cmb2_init', 'cmb2_sample_js_validation' );
 
 function cmb2_after_form_do_js_validation( $post_id, $cmb ) {
 	static $added = false;
