@@ -25,6 +25,11 @@ function cmb2_after_form_do_js_validation( $post_id, $cmb ) {
 
 		$form = $( document.getElementById( 'post' ) );
 		$htmlbody = $( 'html, body' );
+		$toValidate = $( '[data-validation]' );
+
+		if ( ! $toValidate.length ) {
+			return;
+		}
 
 		function checkValidation( evt ) {
 			var labels = [];
@@ -41,7 +46,7 @@ function cmb2_after_form_do_js_validation( $post_id, $cmb ) {
 				$row.css({ background: '' });
 			}
 
-			$( '[data-validation]' ).each( function() {
+			$toValidate.each( function() {
 				var $this = $(this);
 				var val = $this.val();
 				$row = $this.parents( '.cmb-row' );
