@@ -287,4 +287,4 @@ function autocomplete_cmb2_get_post_autocomplete_options() {
 add_action('cmb2_render_autocomplete', 'autocomplete_cmb2_render_autocomplete', 10, 5);
 add_action('admin_enqueue_scripts', 'autocomplete_cmb2_admin_enqueue_scripts');
 add_action('wp_ajax_get_post_options', 'autocomplete_cmb2_get_post_autocomplete_options');
-add_filter('cmb2_init', 'autocomplete_cmb2_meta_boxes');
+add_filter('cmb2_admin_init', 'autocomplete_cmb2_meta_boxes');

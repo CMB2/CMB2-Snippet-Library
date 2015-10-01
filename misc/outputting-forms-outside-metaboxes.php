@@ -27,7 +27,7 @@ function yourprefix_register_cmb2_fields() {
 	) );
 
 }
-add_action( 'cmb2_init', 'yourprefix_register_cmb2_fields' );
+add_action( 'cmb2_admin_init', 'yourprefix_register_cmb2_fields' );
 
 
 /**

@@ -23,7 +23,7 @@ function js_limited_repeat_field_setup() {
 		'repeatable' => true, // Repeatable fields are supported w/in repeatable groups (for most types)
 	) );
 }
-add_action( 'cmb2_init', 'js_limited_repeat_field_setup', 9999 );
+add_action( 'cmb2_admin_init', 'js_limited_repeat_field_setup', 9999 );
 
 function js_limit_field_repeat( $post_id, $cmb ) {
 	// Grab the custom attribute to determine the limit

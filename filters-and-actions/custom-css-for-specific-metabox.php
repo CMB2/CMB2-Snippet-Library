@@ -18,7 +18,7 @@ function js_custom_css_for_metabox() {
 		'type'        => 'text',
 	) );
 }
-add_action( 'cmb2_init', 'js_custom_css_for_metabox' );
+add_action( 'cmb2_admin_init', 'js_custom_css_for_metabox' );
 
 function js_add_custom_css_for_metabox( $post_id, $cmb ) {
 	?>
