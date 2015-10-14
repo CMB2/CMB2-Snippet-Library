@@ -46,6 +46,7 @@ class Myprefix_Admin {
 		add_action( 'admin_init', array( $this, 'init' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
+		add_action( 'cmb2_save_options-page_fields', array( $this, 'settings_notices' ), 10, 3 );
 	}
 
 
@@ -118,6 +119,23 @@ class Myprefix_Admin {
 
 	}
 
+	/**
+	 * Show Settings Notices
+	 *
+	 * @param $object_id
+	 * @param $updated
+	 * @param $cmb
+	 */
+	public function settings_notices( $object_id, $updated, $cmb ) {
+
+		if ( $object_id !== $this->key ) {
+			return;
+		}
+
+		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'myprefix' ), 'updated' );
+		settings_errors( $this->key . '-notices' );
+	}
+	
 	/**
 	 * Public getter method for retrieving protected/private variables
 	 * @since  0.1.0
