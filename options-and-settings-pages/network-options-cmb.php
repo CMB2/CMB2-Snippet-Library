@@ -69,7 +69,7 @@ class Myprefix_Network_Admin {
 		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
 
 		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
-		// Include CMB CSS in the head to avoid FOUT
+		// Include CMB CSS in the head to avoid FOUC
 		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
