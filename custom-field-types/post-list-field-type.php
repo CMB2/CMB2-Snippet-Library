@@ -8,7 +8,6 @@ function cmb2_post_list_render_field( $field, $escaped_value, $object_id, $objec
 	$select_type = $field->args( 'select_type' );
 
 	echo $field_type->input( array(
-	    'data-selecttype' => 'radio' == $select_type ? 'radio' : 'checkbox',
 	    'autocomplete' => 'off',
 	    'style' => 'display:none'
 	) );
