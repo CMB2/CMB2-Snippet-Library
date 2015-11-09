@@ -15,7 +15,7 @@
  */
 function cmb2_render_select_multiple_field_type( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 
-	$select_multiple = '<select class="widefat" multiple name="' . $field->args['_name'] . '" id="' . $field->args['_id'] . '"';
+	$select_multiple = '<select class="widefat" multiple name="' . $field->args['_name'] . '[]" id="' . $field->args['_id'] . '"';
 	foreach ( $field->args['attributes'] as $attribute => $value ) {
 		$select_multiple .= " $attribute=\"$value\"";
 	}
@@ -31,3 +31,21 @@ function cmb2_render_select_multiple_field_type( $field, $escaped_value, $object
 	echo $select_multiple; // WPCS: XSS ok.
 }
 add_action( 'cmb2_render_select_multiple', 'cmb2_render_select_multiple_field_type', 10, 5 );
+
+
+/**
+ * Sanitize the selected value.
+ */
+function cmb2_sanitize_select_multiple_callback( $override_value, $value ) {
+	if ( is_array( $value ) ) {
+		foreach ( $value as $saved_value ) {
+			$value[] = sanitize_text_field( $saved_value );
+		}
+		
+		return $value;
+	} 
+	
+	return;
+}
+add_filter( 'cmb2_sanitize_select_multiple', 'cmb2_sanitize_select_multiple_callback', 10, 2 );
+
