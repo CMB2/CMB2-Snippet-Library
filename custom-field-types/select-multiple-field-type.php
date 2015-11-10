@@ -22,7 +22,7 @@ function cmb2_render_select_multiple_field_type( $field, $escaped_value, $object
 	$select_multiple .= ' />';
 
 	foreach ( $field->args['options'] as $value => $name ) {
-		$selected = in_array( $value, $escaped_value ) ? 'selected="selected"' : '';
+		$selected = ( $escaped_value && in_array( $value, $escaped_value ) ) ? 'selected="selected"' : '';
 		$select_multiple .= '<option class="cmb2-option" value="' . esc_attr( $value ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
 	}
 
