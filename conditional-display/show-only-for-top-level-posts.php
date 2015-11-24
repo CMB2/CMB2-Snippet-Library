@@ -17,7 +17,7 @@ $cmb = new_cmb2_box( array(
  * @return bool        True/false whether to show the metabox
  */
 function ba_metabox_add_for_top_level_posts_only( $cmb ) {
-	$has_parent = get_post_ancestors( $post_id );
+	$has_parent = $cmb->object_id() && get_post_ancestors( $cmb->object_id() );
 
 	return ! $has_parent;
 }
