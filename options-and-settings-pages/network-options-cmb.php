@@ -30,12 +30,32 @@ class Myprefix_Network_Admin {
 	protected $options_page = '';
 
 	/**
+	 * Holds an instance of the project
+	 *
+	 * @Myprefix_Network_Admin
+	 **/
+	private static $instance = null;
+
+	/**
 	 * Constructor
 	 * @since 0.1.0
 	 */
-	public function __construct() {
+	private function __construct() {
 		// Set our title
 		$this->title = __( 'Network Settings', 'myprefix' );
+	}
+
+	/**
+	 * Get the running object
+	 *
+	 * @return Myprefix_Network_Admin
+	 **/
+	public static function get_instance() {
+		if( is_null( self::$instance ) ) {
+			self::$instance = new Myprefix_Network_Admin();
+			self::$instance->hooks();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -182,13 +202,7 @@ class Myprefix_Network_Admin {
  * @return Myprefix_Network_Admin object
  */
 function myprefix_network_admin() {
-	static $object = null;
-	if ( is_null( $object ) ) {
-		$object = new Myprefix_Network_Admin();
-		$object->hooks();
-	}
-
-	return $object;
+	return Myprefix_Network_Admin::get_instance();
 }
 
 /**
@@ -202,4 +216,4 @@ function myprefix_get_network_option( $key = '' ) {
 }
 
 // Get it started
-myprefix_admin();
+myprefix_network_admin();
