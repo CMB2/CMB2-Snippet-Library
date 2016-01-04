@@ -30,12 +30,32 @@ class Myprefix_Admin {
 	protected $options_page = '';
 
 	/**
+	 * Holds an instance of the object
+	 *
+	 * @var Myprefix_Admin
+	 **/
+	private static $instance = null;
+
+	/**
 	 * Constructor
 	 * @since 0.1.0
 	 */
-	public function __construct() {
+	private function __construct() {
 		// Set our title
 		$this->title = __( 'Site Options', 'myprefix' );
+	}
+
+	/**
+	 * Returns the running object
+	 *
+	 * @return Myprefix_Admin
+	 **/
+	public static function get_instance() {
+		if( is_null( self::$instance ) ) {
+			self::$instance = new Myprefix_Admin();
+			self::$instance->hooks();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -161,13 +181,7 @@ class Myprefix_Admin {
  * @return Myprefix_Admin object
  */
 function myprefix_admin() {
-	static $object = null;
-	if ( is_null( $object ) ) {
-		$object = new Myprefix_Admin();
-		$object->hooks();
-	}
-
-	return $object;
+	return Myprefix_Admin::get_instance();
 }
 
 /**
