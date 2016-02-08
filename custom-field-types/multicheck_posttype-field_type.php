@@ -7,6 +7,7 @@ function ds_cmb_render_multicheck_posttype( $field, $escaped_value, $object_id, 
 	$cpts = get_post_types();
 	unset( $cpts[ 'nav_menu_item' ] );
 	unset( $cpts[ 'revision' ] );
+	$cpts = apply_filters( 'multicheck_posttype_' . $field->args[ '_id' ], $cpts );
 	$options = '';
 	$i = 1;
 	$values = (array) $escaped_value;
