@@ -124,7 +124,7 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 		$repeatable_class = $field_object->args['repeatable_class'];
 	}
 
-	$options = $field_object->args['options'];
+	$options = $field_object->options();
 
 	// Set up the options or source PHP variables.
 	if (empty($options)) {

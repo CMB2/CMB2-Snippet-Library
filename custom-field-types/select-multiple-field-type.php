@@ -21,7 +21,7 @@ function cmb2_render_select_multiple_field_type( $field, $escaped_value, $object
 	}
 	$select_multiple .= ' />';
 
-	foreach ( $field->args['options'] as $value => $name ) {
+	foreach ( $field->options() as $value => $name ) {
 		$selected = ( $escaped_value && in_array( $value, $escaped_value ) ) ? 'selected="selected"' : '';
 		$select_multiple .= '<option class="cmb2-option" value="' . esc_attr( $value ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
 	}
@@ -42,10 +42,10 @@ function cmb2_sanitize_select_multiple_callback( $override_value, $value ) {
 		foreach ( $value as $saved_value ) {
 			$value[] = sanitize_text_field( $saved_value );
 		}
-		
+
 		return $value;
-	} 
-	
+	}
+
 	return;
 }
 add_filter( 'cmb2_sanitize_select_multiple', 'cmb2_sanitize_select_multiple_callback', 10, 2 );
