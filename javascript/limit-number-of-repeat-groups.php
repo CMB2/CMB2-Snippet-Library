@@ -43,7 +43,7 @@ function js_limited_group_setup() {
 		'type' => 'textarea_small',
 	) );
 }
-add_action( 'cmb2_init', 'js_limited_group_setup', 9999 );
+add_action( 'cmb2_admin_init', 'js_limited_group_setup', 9999 );
 
 function js_limit_group_repeat( $post_id, $cmb ) {
 	// Grab the custom attribute to determine the limit

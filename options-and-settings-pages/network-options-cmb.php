@@ -30,12 +30,32 @@ class Myprefix_Network_Admin {
 	protected $options_page = '';
 
 	/**
+	 * Holds an instance of the project
+	 *
+	 * @Myprefix_Network_Admin
+	 **/
+	private static $instance = null;
+
+	/**
 	 * Constructor
 	 * @since 0.1.0
 	 */
-	public function __construct() {
+	private function __construct() {
 		// Set our title
 		$this->title = __( 'Network Settings', 'myprefix' );
+	}
+
+	/**
+	 * Get the running object
+	 *
+	 * @return Myprefix_Network_Admin
+	 **/
+	public static function get_instance() {
+		if( is_null( self::$instance ) ) {
+			self::$instance = new self();
+			self::$instance->hooks();
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -45,12 +65,12 @@ class Myprefix_Network_Admin {
 	public function hooks() {
 		add_action( 'admin_init', array( $this, 'init' ) );
 		add_action( 'network_admin_menu', array( $this, 'add_options_page' ) );
-		add_action( 'cmb2_init', array( $this, 'add_options_page_metabox' ) );
+		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
+
 		// Override CMB's getter
 		add_filter( 'cmb2_override_option_get_'. $this->key, array( $this, 'get_override' ), 10, 2 );
 		// Override CMB's setter
 		add_filter( 'cmb2_override_option_save_'. $this->key, array( $this, 'update_override' ), 10, 2 );
-
 	}
 
 	/**
@@ -68,7 +88,8 @@ class Myprefix_Network_Admin {
 	public function add_options_page() {
 		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
 
-		// Include CMB CSS in the head to avoid FOUT
+		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
+		// Include CMB CSS in the head to avoid FOUC
 		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 	}
 
@@ -90,6 +111,9 @@ class Myprefix_Network_Admin {
 	 * @since  0.1.0
 	 */
 	function add_options_page_metabox() {
+
+		// hook in our save notices
+		add_action( "cmb2_save_options-page_fields_{$this->metabox_id}", array( $this, 'settings_notices' ), 10, 2 );
 
 		$cmb = new_cmb2_box( array(
 			'id'         => $this->metabox_id,
@@ -120,6 +144,23 @@ class Myprefix_Network_Admin {
 			'default' => '#bada55',
 		) );
 
+	}
+
+	/**
+	 * Register settings notices for display
+	 *
+	 * @since  0.1.0
+	 * @param  int   $object_id Option key
+	 * @param  array $updated   Array of updated fields
+	 * @return void
+	 */
+	public function settings_notices( $object_id, $updated ) {
+		if ( $object_id !== $this->key || empty( $updated ) ) {
+			return;
+		}
+
+		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'myprefix' ), 'updated' );
+		settings_errors( $this->key . '-notices' );
 	}
 
 	/**
@@ -161,13 +202,7 @@ class Myprefix_Network_Admin {
  * @return Myprefix_Network_Admin object
  */
 function myprefix_network_admin() {
-	static $object = null;
-	if ( is_null( $object ) ) {
-		$object = new Myprefix_Network_Admin();
-		$object->hooks();
-	}
-
-	return $object;
+	return Myprefix_Network_Admin::get_instance();
 }
 
 /**

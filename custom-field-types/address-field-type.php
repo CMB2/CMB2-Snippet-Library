@@ -40,17 +40,17 @@ function jt_cmb2_get_address_field( $metakey, $post_id = 0 ) {
 		'zip'       => '',
 	) );
 
-	$address = '<div class="cmb2-address">';
-	$address .= '<p><strongAddress:</strong> ' . esc_html( $address['address-1'] ) . '</p>';
+	$output = '<div class="cmb2-address">';
+	$output .= '<p><strongAddress:</strong> ' . esc_html( $address['address-1'] ) . '</p>';
 	if ( $address['address-2'] ) {
-		$address .= '<p>' . esc_html( $address['address-2'] ) . '</p>';
+		$output .= '<p>' . esc_html( $address['address-2'] ) . '</p>';
 	}
-	$address .= '<p><strong>City:</strong> ' . esc_html( $address['city'] ) . '</p>';
-	$address .= '<p><strong>State:</strong> ' . esc_html( $address['state'] ) . '</p>';
-	$address .= '<p><strong>Zip:</strong> ' . esc_html( $address['zip'] ) . '</p>';
-	$address = '</div><!-- .cmb2-address -->';
+	$output .= '<p><strong>City:</strong> ' . esc_html( $address['city'] ) . '</p>';
+	$output .= '<p><strong>State:</strong> ' . esc_html( $address['state'] ) . '</p>';
+	$output .= '<p><strong>Zip:</strong> ' . esc_html( $address['zip'] ) . '</p>';
+	$output = '</div><!-- .cmb2-address -->';
 
-	return apply_filters( 'jt_cmb2_get_address_field', $address );
+	return apply_filters( 'jt_cmb2_get_address_field', $output );
 }
 
 /**
@@ -96,6 +96,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'name'  => $field_type_object->_name( '[address-1]' ),
 			'id'    => $field_type_object->_id( '_address_1' ),
 			'value' => $value['address-1'],
+			'desc'  => '',
 		) ); ?>
 	</div>
 	<div><p><label for="<?php echo $field_type_object->_id( '_address_2' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_address_2_text', 'Address 2' ) ); ?></label></p>
@@ -103,6 +104,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'name'  => $field_type_object->_name( '[address-2]' ),
 			'id'    => $field_type_object->_id( '_address_2' ),
 			'value' => $value['address-2'],
+			'desc'  => '',
 		) ); ?>
 	</div>
 	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_city' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_city_text', 'City' ) ); ?></label></p>
@@ -111,6 +113,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'name'  => $field_type_object->_name( '[city]' ),
 			'id'    => $field_type_object->_id( '_city' ),
 			'value' => $value['city'],
+			'desc'  => '',
 		) ); ?>
 	</div>
 	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_state' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_state_text', 'State' ) ); ?></label></p>
@@ -118,6 +121,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'name'    => $field_type_object->_name( '[state]' ),
 			'id'      => $field_type_object->_id( '_state' ),
 			'options' => $state_options,
+			'desc'    => '',
 		) ); ?>
 	</div>
 	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_zip' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_zip_text', 'Zip' ) ); ?></label></p>
@@ -127,11 +131,13 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'id'    => $field_type_object->_id( '_zip' ),
 			'value' => $value['zip'],
 			'type'  => 'number',
+			'desc'  => '',
 		) ); ?>
 	</div>
+	<p class="clear">
+		<?php echo $field_type_object->_desc();?>
+	</p>
 	<?php
-	echo $field_type_object->_desc( true );
-
 }
 add_filter( 'cmb2_render_address', 'jt_cmb2_render_address_field_callback', 10, 5 );
 
