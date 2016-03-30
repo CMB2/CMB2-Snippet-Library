@@ -22,8 +22,8 @@ $cmb = new_cmb2_box( array(
  * @return bool        True/false whether to show the metabox
  */
 function be_taxonomy_show_on_filter( $cmb ) {
-	$tax_terms_to_show_on = $cmb->prop( 'show_on_terms', array() );
-	if ( empty( $tax_terms_to_show_on ) || ! $cmb->object_id() ) {
+	$tax_terms_to_show_on = ! empty( $cmb->args['show_on_terms'] ) ? $cmb->args['show_on_terms'] : array();
+	if ( empty( $tax_terms_to_show_on ) || ! $cmb->object_id ) {
 		return false;
 	}
 
