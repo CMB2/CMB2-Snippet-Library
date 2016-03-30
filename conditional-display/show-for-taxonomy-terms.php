@@ -39,13 +39,17 @@ function be_taxonomy_show_on_filter( $cmb ) {
 			? get_the_terms( $post, $taxonomy )
 			: wp_get_object_terms( $post_id, $taxonomy );
 
-		foreach( $terms as $term ) {
-			if ( in_array( $term->slug, $slugs, true ) ) {
-		    	// Ok, show this metabox
-				return true;
+		if ( ! empty( $terms ) ) {
+			foreach( $terms as $term ) {
+				if ( in_array( $term->slug, $slugs, true ) ) {
+					wp_die( '<xmp>: '. print_r( 'show it', true ) .'</xmp>' );
+					// Ok, show this metabox
+					return true;
+				}
 			}
 		}
 	}
 
 	return false;
 }
+
