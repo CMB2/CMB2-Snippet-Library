@@ -6,7 +6,7 @@
  */
 
 function add_select2_to_all_or_nothing_types( $types ) {
-	$types[] = 'select2',
+	$types[] = 'select2';
 	return $types;
 }
 add_filter( 'cmb2_all_or_nothing_types', 'add_select2_to_all_or_nothing_types' );
