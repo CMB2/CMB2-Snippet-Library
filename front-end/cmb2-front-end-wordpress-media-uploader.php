@@ -20,25 +20,31 @@ function nevestam_allow_contributor_uploads() {
 		return;
 	}
 
+	/**
+	 * Replace 'subscriber' with the required role to update, can also be contributor
+	 */
 	$subscriber = get_role( 'subscriber' );
-	// whoa, manage_options is pretty heavy-handed.
-	// @todo find lowest cap to allow media uploader
-	$subscriber->add_cap( 'manage_options' );
+
+	// This is the only cap needed to upload files.
+	$subscriber->add_cap( 'upload_files' );
 
 }
+
 add_action( 'init', 'nevestam_allow_contributor_uploads' );
 
 /**
  * Display only user-uploaded files to each user
+ *
+ * @param WP_Query $wp_query_obj
  */
 function nevestam_restrict_media_library( $wp_query_obj ) {
 	global $current_user, $pagenow;
 
-	if ( ! is_a( $current_user, 'WP_User') ) {
+	if ( ! is_a( $current_user, 'WP_User' ) ) {
 		return;
 	}
 
-	if ( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) {
+	if ( 'admin-ajax.php' != $pagenow || 'query-attachments' != $_REQUEST['action'] ) {
 		return;
 	}
 
@@ -46,4 +52,5 @@ function nevestam_restrict_media_library( $wp_query_obj ) {
 		$wp_query_obj->set( 'author', $current_user->ID );
 	}
 }
+
 add_action( 'pre_get_posts', 'nevestam_restrict_media_library' );
