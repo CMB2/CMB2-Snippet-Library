@@ -53,7 +53,7 @@ function register_test_cpt_metabox() {
 		'id'   => 'post_content', // Saves to WP post content, allows the_content()
 		'name' => 'Description',
 		'desc' => 'Enter a brief description',
-		'type' => 'textarea',
+		'type' => 'textarea', // wysiwyg is problematic when replacing post_content
 	) );
 
 	$cmb_subsub->add_field( array(
