@@ -1,10 +1,8 @@
 <?php
 /**
- * If you want to replace the default WordPress fields with CMB2 fields,
+ * If you want to replace the default WordPress excerpt field with CMB2 field,
  * it can be done with the following snippets.
  */
-
-
 
 function cmb2_register_excerpt_replacement_box() {
 
