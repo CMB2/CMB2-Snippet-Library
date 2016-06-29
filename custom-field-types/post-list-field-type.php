@@ -21,7 +21,7 @@ function cmb2_post_list_render_field( $field, $escaped_value, $object_id, $objec
 		}
 	}
 	echo '</ul>';
-	
+
 	// JS needed for modal
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-sortable' );

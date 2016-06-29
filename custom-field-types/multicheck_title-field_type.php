@@ -2,8 +2,8 @@
 //By Daniele Mte90 Scasciafratte
 //Is multicheck but with section title
 
-/* 
-//How to use 
+/*
+//How to use
 $array[ 'id_of_the_key' ] = __( 'ID of the key' );
 $fields[ 'Title of the section' ] = $array;
 $cmb->add_field( array(
@@ -21,6 +21,10 @@ function cmb_render_multicheck_title( $field, $escaped_value, $object_id, $objec
 	$data_field = $field->args[ 'data' ];
 	$values = ( array ) $escaped_value;
 	$i = 0;
+
+	if ( version_compare( CMB2_VERSION, '2.2.2', '>=' ) ) {
+		$field_type_object->type = new CMB2_Type_Multicheck( $field_type_object );
+	}
 
 	if ( $data_field ) {
 		foreach ( $data_field as $title => $extra_fields ) {
@@ -46,4 +50,4 @@ function cmb_render_multicheck_title( $field, $escaped_value, $object_id, $objec
 	} else {
 		echo __( 'Nothing' );
 	}
-} 
+}
