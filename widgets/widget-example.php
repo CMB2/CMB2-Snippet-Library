@@ -201,7 +201,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 			$widget .= '<div style="background-color:'. esc_attr( $instance['color'] ) .'">';
 
 			// Title
-			$widget .= ( $atts['title'] ) ? $atts['before_title'] . esc_html( $instance['title'] ) . $atts['after_title'] : '';
+			$widget .= ( $instance['title'] ) ? $atts['before_title'] . esc_html( $instance['title'] ) . $atts['after_title'] : '';
 
 			$widget .= wpautop( wp_kses_post( $instance['desc'] ) );
 
