@@ -171,8 +171,10 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 			self::$shortcode
 		);
 
+		$widget_instance = new CMB2_Widget_Boilerplate;
+
 		$instance = shortcode_atts(
-			$this->defaults,
+			$widget_instance->defaults,
 			isset( $atts['instance'] ) ? (array) $atts['instance'] : array(),
 			self::$shortcode
 		);
