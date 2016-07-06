@@ -43,7 +43,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 	 *
 	 * @var array
 	 */
-	protected $defaults = array();
+	protected static $defaults = array();
 
 	/**
 	 * Store the instance properties as property
@@ -74,7 +74,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 			)
 		);
 
-		$this->defaults = array(
+		self::$defaults = array(
 			'title' => esc_html__( 'CMB2 Widget Title', 'your-textdomain' ),
 			'image' => '',
 			'desc'  => '',
@@ -171,10 +171,8 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 			self::$shortcode
 		);
 
-		$widget_instance = new CMB2_Widget_Boilerplate;
-
 		$instance = shortcode_atts(
-			$widget_instance->defaults,
+			self::$defaults,
 			isset( $atts['instance'] ) ? (array) $atts['instance'] : array(),
 			self::$shortcode
 		);
@@ -238,7 +236,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		// If there are no settings, set up defaults
-		$this->_instance = wp_parse_args( (array) $instance, $this->defaults );
+		$this->_instance = wp_parse_args( (array) $instance, self::$defaults );
 
 		$cmb2 = $this->cmb2();
 
