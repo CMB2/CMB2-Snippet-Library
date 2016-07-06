@@ -37,7 +37,7 @@ function cmb2_admin_hide_excerpt_field() {
 }
 add_filter( 'admin_init', 'cmb2_admin_hide_excerpt_field' );
 
-public function _cmb2_admin_hide_excerpt_field() {
+function _cmb2_admin_hide_excerpt_field() {
 	$screen = get_current_screen();
 
 	if ( isset( $screen->post_type ) && 'post' === $screen->post_type ) {
