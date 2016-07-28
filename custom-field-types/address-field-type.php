@@ -176,10 +176,10 @@ function cmb2_sanitize_address_field( $check, $meta_value, $object_id, $field_ar
 	}
 
 	foreach ( $meta_value as $key => $val ) {
-		$meta_value[ $key ] = array_map( 'sanitize_text_field', $val );
+		$meta_value[ $key ] = array_filter( array_map( 'sanitize_text_field', $val ) );
 	}
 
-	return $meta_value;
+	return array_filter($meta_value);
 }
 add_filter( 'cmb2_sanitize_address', 'cmb2_sanitize_address_field', 10, 5 );
 
@@ -190,9 +190,9 @@ function cmb2_types_esc_address_field( $check, $meta_value, $field_args, $field_
 	}
 
 	foreach ( $meta_value as $key => $val ) {
-		$meta_value[ $key ] = array_map( 'esc_attr', $val );
+		$meta_value[ $key ] = array_filter( array_map( 'esc_attr', $val ) );
 	}
 
-	return $meta_value;
+	return array_filter($meta_value);
 }
 add_filter( 'cmb2_types_esc_address', 'cmb2_types_esc_address_field', 10, 4 );
