@@ -78,22 +78,26 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 	$type_object->type = new CMB2_Type_Select( $type_object );
 
 	echo '<em>'. $start_label . '</em> ';
-	// echo $type_object->type->render();
+
+	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'] );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[start]' ),
 		'id'      => $type_object->_id( '_start' ),
 		'value'   => $value['start'],
-		'options' => jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'] ),
+		'class'   => 'cmb2_select cmb2-year-range-start',
+		'options' => $start_options,
 		'desc'    => '',
 	) );
 
 	echo $separator;
 
+	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], true  );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[finish]' ),
 		'id'      => $type_object->_id( '_finish' ),
 		'value'   => $value['finish'],
-		'options' => jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'] ),
+		'class'   => 'cmb2_select cmb2-year-range-end',
+		'options' => $end_options,
 		'desc'    => '',
 	) );
 	echo ' <em>'. $finish_label . '</em>';
@@ -102,22 +106,78 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 
 	$type_object->_desc( true, true );
 
+	add_action( is_admin() ? 'admin_footer' : 'wp_footer', 'jt_cmb2_date_year_range_js' );
+
 }
 add_filter( 'cmb2_render_date_year_range', 'jt_cmb2_date_year_range', 10, 5 );
 
-function jt_cmb2_date_year_range_options( $type_object, $earliest, $value ) {
+function jt_cmb2_date_year_range_js() {
+	static $done = false;
+	if ( ! $done ) {
+		$done = true;
+	}
+	?>
+	<script type="text/javascript">
+		jQuery( function( $ ) {
+			var $options = {};
+
+			function makeSelected( $newoptions, selected ) {
+				var $selected = $newoptions.filter( '[value="'+ selected +'"]' );
+
+				if ( ! $selected.length ) {
+					$selected = $newoptions.filter( '[value=""]' );
+				}
+
+				// Clear out previous selected
+				$newoptions.filter( ':selected' ).prop( 'selected', false );
+
+				$selected.prop( 'selected', true );
+
+				return $newoptions;
+			}
+
+			function getNewOptions( $options, start, selected ) {
+				if ( start ) {
+					$options = $options.filter( function() {
+						var val = $( this ).val();
+						return'current' === start ? 'current' === val || '' === val : ( val >= start || ! val );
+					} );
+				}
+
+				return makeSelected( $options.clone(), selected );
+			}
+
+			$( document.body ).on( 'change', '.cmb2-year-range-start', function() {
+				var $this        = $( this );
+				var start        = $this.find( ':selected' ).val();
+				var $endPicker   = $this.parent().find( '.cmb2-year-range-end' );
+				var id           = $endPicker.attr( 'id' );
+				var selectedEnd  = $endPicker.find( ':selected' ).val();
+				var $newoptions;
+
+				if ( ! $options[ id ] ) {
+					// Store a cached version of the unmodified options.
+					$options[ id ] = $endPicker.find( 'option' ).clone();
+				}
+
+				$endPicker.html( getNewOptions( $options[ id ], start, selectedEnd ) );
+			} );
+		});
+	</script>
+	<?php
+}
+
+function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reverse = false ) {
 	$options = array();
 
-	$a = array(
+	$not_set = array(
 		'value' => '',
 		'label' => __( 'Not Set' ),
 	);
 
 	if ( cmb2_utils()->isempty( $value ) ) {
-		$a['checked'] = 'checked';
+		$not_set['checked'] = 'checked';
 	}
-
-	$options[] = $a;
 
 	for ( $i = $earliest; $i <= date( 'Y' ); $i++ ) {
 
@@ -139,6 +199,12 @@ function jt_cmb2_date_year_range_options( $type_object, $earliest, $value ) {
 	}
 
 	$options[] = $a;
+
+	if ( $reverse ) {
+		$options = array_reverse( $options );
+	}
+
+	array_unshift( $options, $not_set );
 
 	return implode( "\n", array_map( array( $type_object, 'select_option' ), $options ) );
 }
