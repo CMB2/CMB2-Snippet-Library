@@ -54,7 +54,7 @@ function js_limit_group_repeat( $post_id, $cmb ) {
 	jQuery(document).ready(function($){
 		// Only allow 3 groups
 		var limit            = <?php echo $limit; ?>;
-		var fieldGroupId     = '_cmb2_repeat_group';
+		var fieldGroupId     = '_cmb2_repeat_group'; // This should match the ID of your group field.
 		var $fieldGroupTable = $( document.getElementById( fieldGroupId + '_repeat' ) );
 
 		var countRows = function() {
@@ -84,4 +84,6 @@ function js_limit_group_repeat( $post_id, $cmb ) {
 	</script>
 	<?php
 }
+// Replace `field_group_test` with the ID of the CMB2 meta box in question e.g. this
+// should match the value of $cmb->id in the above example.
 add_action( 'cmb2_after_post_form_field_group_test', 'js_limit_group_repeat', 10, 2 );
