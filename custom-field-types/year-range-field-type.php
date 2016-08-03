@@ -153,7 +153,6 @@ function jt_cmb2_date_year_range_js() {
 				var $endPicker   = $this.parent().find( '.cmb2-year-range-end' );
 				var id           = $endPicker.attr( 'id' );
 				var selectedEnd  = $endPicker.find( ':selected' ).val();
-				var $newoptions;
 
 				if ( ! $options[ id ] ) {
 					// Store a cached version of the unmodified options.
