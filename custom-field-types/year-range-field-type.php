@@ -20,6 +20,7 @@
  * 		'desc'     => __( 'field description (optional)', 'cmb2' ),
  * 		'id'       => 'yourprefix_demo_date_year_range',
  * 		'type'     => 'date_year_range',
+ * 		'reverse'  => true, // true is reverse, false is not
  * 		'earliest' => 1930, // Set the earliest year that should be shown.
  *   		// Optionally set default values.
  * 		'default'  => array(
@@ -55,6 +56,9 @@
 function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $type_object ) {
 	$earliest = $field->args( 'earliest' );
 	$earliest = $earliest ? absint( $earliest ) : 1900;
+	
+	$reverse = $field->args( 'reverse' );
+	$reverse = $reverse ? true : false;
 
 	$start_label = false !== $field->args( 'start_label' )
 		? $field->args( 'start_label' )
@@ -79,7 +83,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 
 	echo '<em>'. $start_label . '</em> ';
 
-	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'] );
+	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'], $reverse );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[start]' ),
 		'id'      => $type_object->_id( '_start' ),
@@ -91,7 +95,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 
 	echo $separator;
 
-	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], true  );
+	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], $reverse  );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[finish]' ),
 		'id'      => $type_object->_id( '_finish' ),
@@ -166,7 +170,7 @@ function jt_cmb2_date_year_range_js() {
 	<?php
 }
 
-function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reverse = false ) {
+function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reverse ) {
 	$options = array();
 
 	$not_set = array(
@@ -199,7 +203,7 @@ function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reve
 
 	$options[] = $a;
 
-	if ( $reverse ) {
+	if ( $reverse == true ) {
 		$options = array_reverse( $options );
 	}
 
