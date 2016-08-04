@@ -1,36 +1,36 @@
-<?php
-/*
- * Year Range field type.. two year-pickers, start and end.
- * Screenshot: http://b.ustin.co/15lKk
- */
-
 /**
  * Example field registration:
  *
  * function yourprefix_register_demo_metabox() {
  *
- * 	$cmb_demo = new_cmb2_box( array(
- * 		'id'            => 'demo_metabox',
- * 		'title'         => __( 'Test Metabox', 'cmb2' ),
- * 		'object_types'  => array( 'page', ),
- * 	) );
+ *    $cmb_demo = new_cmb2_box( array(
+ *        'id'            => 'demo_metabox',
+ *        'title'         => __( 'Test Metabox', 'cmb2' ),
+ *        'object_types'  => array( 'page', ),
+ *    ) );
  *
- * 	$cmb_demo->add_field( array(
- * 		'name'     => __( 'Date Year Range', 'cmb2' ),
- * 		'desc'     => __( 'field description (optional)', 'cmb2' ),
- * 		'id'       => 'yourprefix_demo_date_year_range',
- * 		'type'     => 'date_year_range',
- * 		'reverse'  => true, // true is reverse, false is not
- * 		'earliest' => 1930, // Set the earliest year that should be shown.
- *   		// Optionally set default values.
- * 		'default'  => array(
- * 			'start'  => 1930,
- * 			'finish' => 'current',
- * 		),
- * 		// 'split_values' => true, // Split values to sep. meta fields.
- * 		// 'start_label'  => 'Start', // Optionally change start text
- * 		// 'finish_label' => 'Finish', // Optionally change finish text
- * 	) );
+ *    $cmb_demo->add_field( array(
+ *        'name'     => __( 'Date Year Range', 'cmb2' ),
+ *        'desc'     => __( 'field description (optional)', 'cmb2' ),
+ *        'id'       => 'yourprefix_demo_date_year_range',
+ *        'type'     => 'date_year_range',
+ *        // Optionally set default values.
+ *        'options'  => array(
+ *             'earliest' => 1930, // Set the earliest year that should be shown.
+ *        //   'start_reverse_sort' => true,
+ *        //   'finish_reverse_sort' => false,
+ *        ),
+ *        'default'  => array(
+ *             'start'  => 1930,
+ *             'finish' => 'current',
+ *        ),
+ *        // 'text'     => array(
+ *        //    'start_label'  => 'Start', // Optionally change start text.
+ *        //    'finish_label' => 'Finish', // Optionally change finish text.
+ *        //    'separator' => ' to ', // Optionally change separator string/text.
+ *        // ),
+ *        // 'split_values' => true, // Split values to sep. meta fields.
+ *    ) );
  *
  * }
  * add_action( 'cmb2_init', 'yourprefix_register_demo_metabox' );
@@ -54,23 +54,14 @@
  * @param object $type_object The `CMB2_Types` object
  */
 function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $type_object ) {
-	$earliest = $field->args( 'earliest' );
+	$earliest = $field->options( 'earliest' );
 	$earliest = $earliest ? absint( $earliest ) : 1900;
 	
-	$reverse = $field->args( 'reverse' );
-	$reverse = $reverse ? true : false;
+	$start_reverse_sort = $field->options( 'start_reverse_sort' );
+	$start_reverse_sort = $start_reverse_sort ? true : false;
 
-	$start_label = false !== $field->args( 'start_label' )
-		? $field->args( 'start_label' )
-		: __( 'Starting Year' );
-
-	$finish_label = false !== $field->args( 'finish_label' )
-		? $field->args( 'finish_label' )
-		: __( 'Final Year' );
-
-	$separator = false !== $field->args( 'separator' )
-		? $field->args( 'separator' )
-		: __( ' &mdash; ' );
+	$finish_reverse_sort = $field->options( 'finish_reverse_sort' );
+	$finish_reverse_sort = $finish_reverse_sort ? true : false;
 
 	$value = wp_parse_args( $value, array(
 		'start'  => '',
@@ -81,9 +72,9 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 	$field->args['description'] = '';
 	$type_object->type = new CMB2_Type_Select( $type_object );
 
-	echo '<em>'. $start_label . '</em> ';
+	echo '<em>'. $type_object->_text( 'start_label', 'Starting Year' ) . '</em> ';
 
-	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'], $reverse );
+	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'], $start_reverse_sort );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[start]' ),
 		'id'      => $type_object->_id( '_start' ),
@@ -93,9 +84,9 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 		'desc'    => '',
 	) );
 
-	echo $separator;
+	echo $type_object->_text( 'separator', ' &mdash; ' );
 
-	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], $reverse  );
+	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], $finish_reverse_sort  );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[finish]' ),
 		'id'      => $type_object->_id( '_finish' ),
@@ -104,7 +95,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 		'options' => $end_options,
 		'desc'    => '',
 	) );
-	echo ' <em>'. $finish_label . '</em>';
+	echo ' <em>'. $type_object->_text( 'finish_label', 'Final Year' ) . '</em>';
 
 	$field->args['description'] = $desc;
 
@@ -165,12 +156,15 @@ function jt_cmb2_date_year_range_js() {
 
 				$endPicker.html( getNewOptions( $options[ id ], start, selectedEnd ) );
 			} );
+
+			// Kick it off.
+			$( '.cmb2-year-range-start' ).trigger( 'change' );
 		});
 	</script>
 	<?php
 }
 
-function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reverse ) {
+function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reverse = false ) {
 	$options = array();
 
 	$not_set = array(
@@ -203,7 +197,7 @@ function jt_cmb2_date_year_range_options( $type_object, $earliest, $value, $reve
 
 	$options[] = $a;
 
-	if ( $reverse == true ) {
+	if ( $reverse ) {
 		$options = array_reverse( $options );
 	}
 
