@@ -9,32 +9,32 @@
  *
  * function yourprefix_register_demo_metabox() {
  *
- * 	$cmb_demo = new_cmb2_box( array(
- * 		'id'            => 'demo_metabox',
- * 		'title'         => __( 'Test Metabox', 'cmb2' ),
- * 		'object_types'  => array( 'page', ),
- * 	) );
+ *    $cmb_demo = new_cmb2_box( array(
+ *        'id'            => 'demo_metabox',
+ *        'title'         => __( 'Test Metabox', 'cmb2' ),
+ *        'object_types'  => array( 'page', ),
+ *    ) );
  *
- * 	$cmb_demo->add_field( array(
- * 		'name'     => __( 'Date Year Range', 'cmb2' ),
- * 		'desc'     => __( 'field description (optional)', 'cmb2' ),
- * 		'id'       => 'yourprefix_demo_date_year_range',
- * 		'type'     => 'date_year_range',
- *   		// Optionally set default values.
- * 		'options'  => array(
- *    		'earliest' => 1930, // Set the earliest year that should be shown.
- * 		),
- * 		'default'  => array(
- * 			'start'  => 1930,
- * 			'finish' => 'current',
- * 		),
- * 		// 'text'     => array(
- * 		// 	'start_label'  => 'Start', // Optionally change start text.
- * 		// 	'finish_label' => 'Finish', // Optionally change finish text.
- * 		// 	'separator' => ' to ', // Optionally change separator string/text.
- * 		// ),
- * 		// 'split_values' => true, // Split values to sep. meta fields.
- * 	) );
+ *    $cmb_demo->add_field( array(
+ *        'name'     => __( 'Date Year Range', 'cmb2' ),
+ *        'desc'     => __( 'field description (optional)', 'cmb2' ),
+ *        'id'       => 'yourprefix_demo_date_year_range',
+ *        'type'     => 'date_year_range',
+ *        // Optionally set default values.
+ *        'options'  => array(
+ *             'earliest' => 1930, // Set the earliest year that should be shown.
+ *        ),
+ *        'default'  => array(
+ *             'start'  => 1930,
+ *             'finish' => 'current',
+ *        ),
+ *        // 'text'     => array(
+ *        //    'start_label'  => 'Start', // Optionally change start text.
+ *        //    'finish_label' => 'Finish', // Optionally change finish text.
+ *        //    'separator' => ' to ', // Optionally change separator string/text.
+ *        // ),
+ *        // 'split_values' => true, // Split values to sep. meta fields.
+ *    ) );
  *
  * }
  * add_action( 'cmb2_init', 'yourprefix_register_demo_metabox' );
