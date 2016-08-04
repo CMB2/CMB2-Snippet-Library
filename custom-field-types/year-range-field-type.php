@@ -20,15 +20,20 @@
  * 		'desc'     => __( 'field description (optional)', 'cmb2' ),
  * 		'id'       => 'yourprefix_demo_date_year_range',
  * 		'type'     => 'date_year_range',
- * 		'earliest' => 1930, // Set the earliest year that should be shown.
  *   		// Optionally set default values.
+ * 		'options'  => array(
+ *    		'earliest' => 1930, // Set the earliest year that should be shown.
+ * 		),
  * 		'default'  => array(
  * 			'start'  => 1930,
  * 			'finish' => 'current',
  * 		),
+ * 		// 'text'     => array(
+ * 		// 	'start_label'  => 'Start', // Optionally change start text.
+ * 		// 	'finish_label' => 'Finish', // Optionally change finish text.
+ * 		// 	'separator' => ' to ', // Optionally change separator string/text.
+ * 		// ),
  * 		// 'split_values' => true, // Split values to sep. meta fields.
- * 		// 'start_label'  => 'Start', // Optionally change start text
- * 		// 'finish_label' => 'Finish', // Optionally change finish text
  * 	) );
  *
  * }
@@ -53,20 +58,8 @@
  * @param object $type_object The `CMB2_Types` object
  */
 function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $type_object ) {
-	$earliest = $field->args( 'earliest' );
+	$earliest = $field->options( 'earliest' );
 	$earliest = $earliest ? absint( $earliest ) : 1900;
-
-	$start_label = false !== $field->args( 'start_label' )
-		? $field->args( 'start_label' )
-		: __( 'Starting Year' );
-
-	$finish_label = false !== $field->args( 'finish_label' )
-		? $field->args( 'finish_label' )
-		: __( 'Final Year' );
-
-	$separator = false !== $field->args( 'separator' )
-		? $field->args( 'separator' )
-		: __( ' &mdash; ' );
 
 	$value = wp_parse_args( $value, array(
 		'start'  => '',
@@ -77,7 +70,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 	$field->args['description'] = '';
 	$type_object->type = new CMB2_Type_Select( $type_object );
 
-	echo '<em>'. $start_label . '</em> ';
+	echo '<em>'. $type_object->_text( 'start_label', 'Starting Year' ) . '</em> ';
 
 	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'] );
 	echo $type_object->select( array(
@@ -89,7 +82,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 		'desc'    => '',
 	) );
 
-	echo $separator;
+	echo $type_object->_text( 'separator', ' &mdash; ' );
 
 	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], true  );
 	echo $type_object->select( array(
@@ -100,7 +93,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 		'options' => $end_options,
 		'desc'    => '',
 	) );
-	echo ' <em>'. $finish_label . '</em>';
+	echo ' <em>'. $type_object->_text( 'finish_label', 'Final Year' ) . '</em>';
 
 	$field->args['description'] = $desc;
 
