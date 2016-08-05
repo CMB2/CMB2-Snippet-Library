@@ -23,6 +23,8 @@
  *        // Optionally set default values.
  *        'options'  => array(
  *             'earliest' => 1930, // Set the earliest year that should be shown.
+ *            // 'start_reverse_sort' => true,
+ *            // 'finish_reverse_sort' => false,
  *        ),
  *        'default'  => array(
  *             'start'  => 1930,
@@ -61,6 +63,12 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 	$earliest = $field->options( 'earliest' );
 	$earliest = $earliest ? absint( $earliest ) : 1900;
 
+	$start_reverse_sort = $field->options( 'start_reverse_sort' );
+	$start_reverse_sort = $start_reverse_sort ? true : false;
+
+	$finish_reverse_sort = $field->options( 'finish_reverse_sort' );
+	$finish_reverse_sort = $finish_reverse_sort ? true : false;
+
 	$value = wp_parse_args( $value, array(
 		'start'  => '',
 		'finish' => '',
@@ -72,7 +80,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 
 	echo '<em>'. $type_object->_text( 'start_label', 'Starting Year' ) . '</em> ';
 
-	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'] );
+	$start_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['start'], $start_reverse_sort );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[start]' ),
 		'id'      => $type_object->_id( '_start' ),
@@ -84,7 +92,7 @@ function jt_cmb2_date_year_range( $field, $value, $object_id, $object_type, $typ
 
 	echo $type_object->_text( 'separator', ' &mdash; ' );
 
-	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], true  );
+	$end_options = jt_cmb2_date_year_range_options( $type_object, $earliest, $value['finish'], $finish_reverse_sort  );
 	echo $type_object->select( array(
 		'name'    => $type_object->_name( '[finish]' ),
 		'id'      => $type_object->_id( '_finish' ),
