@@ -1,9 +1,12 @@
 <?php
 
+// Do your $cmb = new_cmb2_box(), then add this field.
+// See https://github.com/WebDevStudios/CMB2/blob/trunk/example-functions.php for more.
+
 /**
  * A CMB2 Readonly Field Type
  */
-$readonly = array(
+$cmb->add_field( array(
 	'name'        => 'Read Only',
 	'description' => 'The value of this input should be saved somewhere else.',
 	'id'          => '_jtcmb2_readonly',
@@ -12,4 +15,4 @@ $readonly = array(
 		'readonly' => 'readonly',
 		'disabled' => 'disabled',
 	),
-);
+) );
