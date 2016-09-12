@@ -39,8 +39,8 @@ add_action( 'cmb2_render_select_multiple', 'cmb2_render_select_multiple_field_ty
  */
 function cmb2_sanitize_select_multiple_callback( $override_value, $value ) {
 	if ( is_array( $value ) ) {
-		foreach ( $value as $saved_value ) {
-			$value[] = sanitize_text_field( $saved_value );
+		foreach ( $value as $key => $saved_value ) {
+			$value[$key] = sanitize_text_field( $saved_value );
 		}
 
 		return $value;
