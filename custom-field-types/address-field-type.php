@@ -83,6 +83,7 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 		'city'      => '',
 		'state'     => '',
 		'zip'       => '',
+		'country'   => '',
 	) );
 
 	$state_options = '';
@@ -107,33 +108,45 @@ function jt_cmb2_render_address_field_callback( $field, $value, $object_id, $obj
 			'desc'  => '',
 		) ); ?>
 	</div>
-	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_city' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_city_text', 'City' ) ); ?></label></p>
+	<div style="overflow: hidden;">
+		<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_city' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_city_text', 'City' ) ); ?></label></p>
+			<?php echo $field_type_object->input( array(
+				'class' => 'cmb_text_small',
+				'name'  => $field_type_object->_name( '[city]' ),
+				'id'    => $field_type_object->_id( '_city' ),
+				'value' => $value['city'],
+				'desc'  => '',
+			) ); ?>
+		</div>
+		<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_state' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_state_text', 'State' ) ); ?></label></p>
+			<?php echo $field_type_object->select( array(
+				'name'    => $field_type_object->_name( '[state]' ),
+				'id'      => $field_type_object->_id( '_state' ),
+				'options' => $state_options,
+				'desc'    => '',
+			) ); ?>
+		</div>
+		<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_zip' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_zip_text', 'Zip' ) ); ?></label></p>
+			<?php echo $field_type_object->input( array(
+				'class' => 'cmb_text_small',
+				'name'  => $field_type_object->_name( '[zip]' ),
+				'id'    => $field_type_object->_id( '_zip' ),
+				'value' => $value['zip'],
+				'type'  => 'number',
+				'desc'  => '',
+			) ); ?>
+		</div>
+	</div>
+	<?php if ( $field->args( 'do_country' ) ) : ?>
+	<div class="clear"><p><label for="<?php echo $field_type_object->_id( '_country' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_country_text', 'Country' ) ); ?></label></p>
 		<?php echo $field_type_object->input( array(
-			'class' => 'cmb_text_small',
-			'name'  => $field_type_object->_name( '[city]' ),
-			'id'    => $field_type_object->_id( '_city' ),
-			'value' => $value['city'],
+			'name'  => $field_type_object->_name( '[country]' ),
+			'id'    => $field_type_object->_id( '_country' ),
+			'value' => $value['country'],
 			'desc'  => '',
 		) ); ?>
 	</div>
-	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_state' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_state_text', 'State' ) ); ?></label></p>
-		<?php echo $field_type_object->select( array(
-			'name'    => $field_type_object->_name( '[state]' ),
-			'id'      => $field_type_object->_id( '_state' ),
-			'options' => $state_options,
-			'desc'    => '',
-		) ); ?>
-	</div>
-	<div class="alignleft"><p><label for="<?php echo $field_type_object->_id( '_zip' ); ?>'"><?php echo esc_html( $field_type_object->_text( 'address_zip_text', 'Zip' ) ); ?></label></p>
-		<?php echo $field_type_object->input( array(
-			'class' => 'cmb_text_small',
-			'name'  => $field_type_object->_name( '[zip]' ),
-			'id'    => $field_type_object->_id( '_zip' ),
-			'value' => $value['zip'],
-			'type'  => 'number',
-			'desc'  => '',
-		) ); ?>
-	</div>
+	<?php endif; ?>
 	<p class="clear">
 		<?php echo $field_type_object->_desc();?>
 	</p>
