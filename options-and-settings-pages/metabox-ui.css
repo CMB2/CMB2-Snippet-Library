@@ -1,0 +1,31 @@
+/**
+ * Style by Daniele Mte90 Scasciafratte
+ * Screen: https://github.com/WebDevStudios/CMB2-Snippet-Library/issues/46#issue-181381934
+ * Works on options/settings pages and transform the different fields separated by a title like metabox
+ */ 
+
+.cmb2-metabox.cmb-field-list .cmb-row.cmb-type-title {
+	padding: 8px 12px;
+	margin: 0;
+	margin-top:10px;
+	line-height: 1.4;
+	border: 1px solid #e5e5e5;
+	border-bottom: 1px solid #eee;
+}
+.cmb2-metabox.cmb-field-list .cmb-row {
+	background: #fff;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	padding: 0 12px;        
+	border: 1px solid #e5e5e5;
+	margin-top:-1px;
+}
+.cmb2-metabox.cmb-field-list .cmb-th {
+	font-weight: initial;
+}
+.cmb2-metabox.cmb-field-list .cmb2-metabox-title {
+	margin: 0;
+	padding:0;
+}
+.cmb-form .button-primary {
+    margin-top: 20px;
+}
