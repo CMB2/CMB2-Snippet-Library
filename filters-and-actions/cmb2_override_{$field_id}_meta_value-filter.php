@@ -65,4 +65,4 @@ function yourprefix_get_default_group_value_from_json( $value, $object_id, $args
 	return $value;
 }
 
-add_filter( 'cmb2_override__yourprefix_group_demo_meta_value', 'yourprefix_get_default_group_value_from_json', 10, 4 );
+add_filter( 'cmb2_override_yourprefix_group_demo_meta_value', 'yourprefix_get_default_group_value_from_json', 10, 4 );
