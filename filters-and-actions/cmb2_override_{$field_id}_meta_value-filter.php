@@ -1,7 +1,8 @@
 <?php
 /**
  * This file demonstrates providing a default value for a group field from a JSON blob.
- * It is using the fields from the group field example in [example-functions.php](https://github.com/WebDevStudios/CMB2/blob/3b0cc0a696f70d1f3ce7c94af8318f4dd3f34688/example-functions.php#L460-L522).
+ * It is using the fields from the group field example in:
+ * [example-functions.php](https://github.com/WebDevStudios/CMB2/blob/3b0cc0a696f70d1f3ce7c94af8318f4dd3f34688/example-functions.php#L460-L522).
  */
 
 /**
