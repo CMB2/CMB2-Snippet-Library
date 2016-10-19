@@ -20,11 +20,11 @@ License: GPL-2.0+
  */
 function ml_cmb2_render_dashicon_radio_callback( $field, $escaped_value, $object_id, $object_type, $field_type_object ) {
 
-	if ( 'dashicon_radio' === $field->args['type'] ) {
-		$field->args['options'] = ml_cmb2_dashicons_return_array();
-	}
-	echo $field_type_object->radio();
+	add_filter( 'cmb2_list_input_attributes', 'ml_cmb2_dashicon_radio_attributes', 10, 4 );
 
+	$field->args['options'] = ml_cmb2_dashicons_return_array();
+	echo $field_type_object->radio();
+	remove_filter( 'cmb2_list_input_attributes', 'ml_cmb2_dashicon_radio_attributes', 10, 4 );
 }
 add_action( 'cmb2_render_dashicon_radio', 'ml_cmb2_render_dashicon_radio_callback', 10, 5 );
 
@@ -38,17 +38,12 @@ add_action( 'cmb2_render_dashicon_radio', 'ml_cmb2_render_dashicon_radio_callbac
  * @return array
  */
 function ml_cmb2_dashicon_radio_attributes( $args, $defaults, $field, $cmb ) {
-
-	if ( 'dashicon_radio' === $field->args['type'] ) {
-		foreach ( ml_cmb2_dashicons_return_array() as $dashicon => $name ) {
-			if ( $dashicon === $args['value'] ) {
-				$args['label'] = '<span class="dashicons ' . $dashicon . '"></span> ' . $name ;
-			}
-		}
+	if ( $args['value'] ) {
+		$args['label'] = '<span class="dashicons ' . $args['value'] . '"></span> ' . $args['label'];
 	}
+
 	return $args;
 }
-add_filter( 'cmb2_list_input_attributes', 'ml_cmb2_dashicon_radio_attributes', 10, 4 );
 
 /**
  * Custom CMB2 css for dashicon_radio field
