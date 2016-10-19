@@ -62,6 +62,10 @@ function ml_cmb2_dashicon_radio_css() {
 			padding: 10px;
 
 		}
+		.cmb-type-dashicon-radio li {
+			display: inline-block;
+			min-width: 222px;
+		}
 	</style>
 	<?php
 }
