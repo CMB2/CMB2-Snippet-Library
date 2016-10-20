@@ -25,6 +25,8 @@ function ml_cmb2_render_dashicon_radio_callback( $field, $escaped_value, $object
 	$field->args['options'] = ml_cmb2_dashicons_return_array();
 	echo $field_type_object->radio();
 	remove_filter( 'cmb2_list_input_attributes', 'ml_cmb2_dashicon_radio_attributes', 10, 4 );
+
+	ml_cmb2_dashicon_radio_css();
 }
 add_action( 'cmb2_render_dashicon_radio', 'ml_cmb2_render_dashicon_radio_callback', 10, 5 );
 
@@ -51,6 +53,11 @@ function ml_cmb2_dashicon_radio_attributes( $args, $defaults, $field, $cmb ) {
  * @return void
  */
 function ml_cmb2_dashicon_radio_css() {
+	static $added = false;
+	if ( $added ) {
+		return;
+	}
+	$added = true;
 	?>
 	<style type="text/css" media="screen">
 		.cmb-type-dashicon-radio .cmb-td {
@@ -69,7 +76,6 @@ function ml_cmb2_dashicon_radio_css() {
 	</style>
 	<?php
 }
-add_action( 'admin_head', 'ml_cmb2_dashicon_radio_css' );
 
 /**
  * Returns array of dashicon data
