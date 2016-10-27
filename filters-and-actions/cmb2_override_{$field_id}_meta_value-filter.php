@@ -29,6 +29,8 @@
  * @return array The group field value array.
  */
 function yourprefix_get_default_group_value_from_json( $value, $object_id, $args, $field ) {
+	static $defaults = null;
+
 	// Only set the default if the original value has not been overridden,
 	// and if there is no existing value.
 	if ( 'cmb2_field_no_override_val' !== $value ) {
