@@ -160,6 +160,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 		$atts = shortcode_atts(
 			array(
 				// Ensure variables
+				'instance'      => array(),
 				'before_widget' => '',
 				'after_widget'  => '',
 				'before_title'  => '',
@@ -173,7 +174,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 
 		$instance = shortcode_atts(
 			self::$defaults,
-			isset( $atts['instance'] ) ? (array) $atts['instance'] : array(),
+			! empty( $atts['instance'] ) ? (array) $atts['instance'] : array(),
 			self::$shortcode
 		);
 
