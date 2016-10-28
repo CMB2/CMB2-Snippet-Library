@@ -160,6 +160,7 @@ class CMB2_Widget_Boilerplate extends WP_Widget {
 		$atts = shortcode_atts(
 			array(
 				// Ensure variables
+				'instance'=>$atts['instance'],
 				'before_widget' => '',
 				'after_widget'  => '',
 				'before_title'  => '',
