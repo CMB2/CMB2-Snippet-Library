@@ -49,7 +49,7 @@ function jt_cmb2_get_address_field( $metakey, $post_id = 0 ) {
 	$output .= '<p><strong>City:</strong> ' . esc_html( $address['city'] ) . '</p>';
 	$output .= '<p><strong>State:</strong> ' . esc_html( $address['state'] ) . '</p>';
 	$output .= '<p><strong>Zip:</strong> ' . esc_html( $address['zip'] ) . '</p>';
-	$output = '</div><!-- .cmb2-address -->';
+	$output .= '</div><!-- .cmb2-address -->';
 
 	return apply_filters( 'jt_cmb2_get_address_field', $output );
 }
