@@ -211,8 +211,26 @@ function myprefix_network_admin() {
  * @param  string  $key Options array key
  * @return mixed        Option value
  */
-function myprefix_get_network_option( $key = '' ) {
-	return cmb2_get_option( myprefix_admin()->key, $key );
+function myprefix_get_network_option( $key = '', $default = null ) {
+	$opt_key = myprefix_network_admin()->key;
+
+	if ( function_exists( 'cmb2_get_option' ) ) {
+		// Use cmb2_get_option as it passes through some key filters.
+		return cmb2_get_option( $opt_key, $key, $default );
+	}
+
+	// Fallback to get_option if CMB2 is not loaded yet.
+	$opts = get_option( $opt_key, $key, $default );
+
+	$val = $default;
+
+	if ( 'all' == $key ) {
+		$val = $opts;
+	} elseif ( array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+		$val = $opts[ $key ];
+	}
+
+	return $val;
 }
 
 // Get it started
