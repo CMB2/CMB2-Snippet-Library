@@ -37,15 +37,6 @@ class Myprefix_Admin {
 	protected static $instance = null;
 
 	/**
-	 * Constructor
-	 * @since 0.1.0
-	 */
-	private function __construct() {
-		// Set our title
-		$this->title = __( 'Site Options', 'myprefix' );
-	}
-
-	/**
 	 * Returns the running object
 	 *
 	 * @return Myprefix_Admin
@@ -57,6 +48,15 @@ class Myprefix_Admin {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Constructor
+	 * @since 0.1.0
+	 */
+	protected function __construct() {
+		// Set our title
+		$this->title = __( 'Site Options', 'myprefix' );
 	}
 
 	/**
