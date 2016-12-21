@@ -33,8 +33,8 @@ class Myprefix_Admin {
 	 * Holds an instance of the object
 	 *
 	 * @var Myprefix_Admin
-	 **/
-	private static $instance = null;
+	 */
+	protected static $instance = null;
 
 	/**
 	 * Constructor
@@ -49,12 +49,13 @@ class Myprefix_Admin {
 	 * Returns the running object
 	 *
 	 * @return Myprefix_Admin
-	 **/
+	 */
 	public static function get_instance() {
-		if( is_null( self::$instance ) ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 			self::$instance->hooks();
 		}
+
 		return self::$instance;
 	}
 
