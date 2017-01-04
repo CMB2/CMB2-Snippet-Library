@@ -188,8 +188,9 @@ function myprefix_admin() {
 /**
  * Wrapper function around cmb2_get_option
  * @since  0.1.0
- * @param  string  $key Options array key
- * @return mixed        Option value
+ * @param  string $key     Options array key
+ * @param  mixed  $default Optional default value
+ * @return mixed           Option value
  */
 function myprefix_get_option( $key = '', $default = null ) {
 	if ( function_exists( 'cmb2_get_option' ) ) {
