@@ -29,4 +29,7 @@ function js_add_custom_css_for_metabox( $post_id, $cmb ) {
 	</style>
 	<?php
 }
-add_action( 'cmb2_after_post_form_custom_css_test', 'js_add_custom_css_for_metabox', 10, 2 );
+
+$object = 'post'; // post | term
+$cmb_id = 'custom_css_test'
+add_action( "cmb2_after_{object}_form_{$cmb_id}", 'js_add_custom_css_for_metabox', 10, 2 );
