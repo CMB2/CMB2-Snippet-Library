@@ -1,6 +1,9 @@
 <?php
 /**
  * Associates a WP menu with a post, and provides links between the post/menu editing interfaces.
+ * Screenshots:
+ * - metabox: http://b.ustin.co/Gxhf
+ * - widget: http://b.ustin.co/lD30
  */
 
 function cmb2_register_post_menu_box() {
