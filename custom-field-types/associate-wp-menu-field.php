@@ -100,6 +100,9 @@ class CMB2_Post_Menu_Association {
 
 		?>
 		<a href="<?php echo esc_url( $url ); ?>"><?php echo $link_title; ?></a>
+
+		<p class="cmb2-metabox-description explain-widget-necessary"><strong>Note:</strong> In order for this menu to display, you will need to ensure the "Associated Post Menu" widget is placed in the <a href="<?php echo admin_url( 'widgets.php' ); ?>">widget area</a> for this template.</p>
+
 		<?php if ( ! $script_added ) : ?>
 			<script type="text/javascript">
 				if ( '#<?php echo $this->metabox_id; ?>' === window.location.hash ) {
@@ -110,6 +113,11 @@ class CMB2_Post_Menu_Association {
 			<style type="text/css">
 				.post-menu-box-highlighted {
 					box-shadow: 0 0 10px 5px rgba(226, 73, 73, 0.28);
+				}
+				#side-sortables #<?php echo $this->metabox_id; ?> .explain-widget-necessary {
+					padding-bottom: 0;
+					padding-top: 10px;
+					margin-bottom: -15px;
 				}
 			</style>
 		<?php endif;
