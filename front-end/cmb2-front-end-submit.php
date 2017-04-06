@@ -42,6 +42,13 @@ function wds_frontend_form_register() {
 	) );
 
 	$cmb->add_field( array(
+		'name'     => __( 'Categories', 'wds-post-submit' ),
+		'id'       => 'submitted_categories',
+		'type'     => 'taxonomy_multicheck',
+		'taxonomy' => 'category', // Taxonomy Slug
+	) );
+
+	$cmb->add_field( array(
 		'name' => __( 'Your Name', 'wds-post-submit' ),
 		'desc' => __( 'Please enter your name for author credit on the new post.', 'wds-post-submit' ),
 		'id'   => 'submitted_author_name',
