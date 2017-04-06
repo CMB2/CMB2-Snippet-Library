@@ -198,6 +198,8 @@ function wds_handle_frontend_new_post_form_submission() {
 		return $cmb->prop( 'submission_error', $new_submission_id );
 	}
 
+	$cmb->save_fields( $new_submission_id, 'post', $sanitized_values );
+
 	/**
 	 * Other than post_type and post_status, we want
 	 * our uploaded attachment post to have the same post-data
@@ -211,18 +213,6 @@ function wds_handle_frontend_new_post_form_submission() {
 	// If our photo upload was successful, set the featured image
 	if ( $img_id && ! is_wp_error( $img_id ) ) {
 		set_post_thumbnail( $new_submission_id, $img_id );
-	}
-
-	// Loop through remaining (sanitized) data, and save to post-meta
-	foreach ( $sanitized_values as $key => $value ) {
-		if ( is_array( $value ) ) {
-			$value = array_filter( $value );
-			if( ! empty( $value ) ) {
-				update_post_meta( $new_submission_id, $key, $value );
-			}
-		} else {
-			update_post_meta( $new_submission_id, $key, $value );
-		}
 	}
 
 	/*
