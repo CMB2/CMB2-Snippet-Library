@@ -163,6 +163,7 @@ class Myprefix_Genesis_CPT_Settings_Metabox {
 			'hookup'       => false, // We'll handle ourselves. (add_sanitized_values())
 			'cmb_styles'   => false, // We'll handle ourselves. (admin_hooks())
 			'context'      => 'main', // Important for Genesis.
+			// 'priority'     => 'low', // Defaults to 'high'.
 			'object_types' => array( $this->admin_hook ),
 			'show_on'      => array(
 				// These are important, don't remove
