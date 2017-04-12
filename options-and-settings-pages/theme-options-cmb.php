@@ -9,13 +9,13 @@ class Myprefix_Admin {
  	 * Option key, and option page slug
  	 * @var string
  	 */
-	private $key = 'myprefix_options';
+	protected $key = 'myprefix_options';
 
 	/**
  	 * Options page metabox id
  	 * @var string
  	 */
-	private $metabox_id = 'myprefix_option_metabox';
+	protected $metabox_id = 'myprefix_option_metabox';
 
 	/**
 	 * Options Page title
