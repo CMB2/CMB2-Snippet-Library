@@ -1,6 +1,13 @@
 <?php
 /**
  * CMB2 Genesis CPT Archive Metabox
+ *
+ * To fetch these options, use `genesis_get_cpt_option()`, e.g.
+ * 	// In CPT archive template:
+ *  	if ( genesis_has_post_type_archive_support() ) {
+ *  		$color = genesis_get_cpt_option( 'test_colorpicker' );
+ *  	}
+ *
  * @version 0.1.0
  */
 class Myprefix_Genesis_CPT_Settings_Metabox {

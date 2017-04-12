@@ -1,6 +1,11 @@
 <?php
 /**
- * CMB2 Theme Options
+ * CMB2 Genesis Settings Metabox
+ *
+ * To fetch these options, use `genesis_get_option()`, e.g.
+ *
+ * 	$color = genesis_get_option( 'test_colorpicker' );
+ *
  * @version 0.1.0
  */
 class Myprefix_Genesis_Settings_Metabox {
