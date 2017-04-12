@@ -82,7 +82,7 @@ class Myprefix_Genesis_Settings_Metabox {
 		add_action( "admin_print_styles-{$this->admin_hook}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 
 		// Hook into the genesis cpt setttings save and add in the CMB2 sanitized values.
-		add_filter( "sanitize_option_{$this->key}", array( $this, 'add_sanitized_values' ), 999, 2 );
+		add_filter( "sanitize_option_{$this->key}", array( $this, 'add_sanitized_values' ), 999 );
 
 		// Hook up our Genesis metabox.
 		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'add_meta_box' ) );
@@ -114,7 +114,15 @@ class Myprefix_Genesis_Settings_Metabox {
 		$cmb->show_form( $cmb->object_id(), $cmb->object_type() );
 	}
 
-	public function add_sanitized_values( $new_value, $option ) {
+	/**
+	 * If saving the cpt settings option, add the CMB2 sanitized values.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param  array $new_value Array of values for the setting.
+	 * @return array Updated array of values for the setting.
+	 */
+	public function add_sanitized_values( $new_value ) {
 		if ( ! empty( $_POST ) ) {
 			$cmb = $this->init_metabox();
 
