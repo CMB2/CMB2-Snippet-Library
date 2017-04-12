@@ -30,12 +30,6 @@ class Myprefix_Genesis_Settings_Metabox {
 	protected $admin_hook = 'toplevel_page_genesis';
 
 	/**
-	 * Options Page hook
-	 * @var string
-	 */
-	protected $options_page = '';
-
-	/**
 	 * Holds an instance of CMB2
 	 *
 	 * @var CMB2
@@ -193,7 +187,7 @@ class Myprefix_Genesis_Settings_Metabox {
 		}
 
 		// Allowed fields to retrieve
-		if ( in_array( $field, array( 'key', 'admin_page', 'metabox_id', 'admin_hook', 'options_page' ), true ) ) {
+		if ( in_array( $field, array( 'key', 'admin_page', 'metabox_id', 'admin_hook' ), true ) ) {
 			return $this->{$field};
 		}
 
