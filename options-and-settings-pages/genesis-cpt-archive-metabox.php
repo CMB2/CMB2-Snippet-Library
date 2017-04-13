@@ -118,7 +118,7 @@ class Myprefix_Genesis_CPT_Settings_Metabox {
 		// Include CMB CSS in the head to avoid FOUC.
 		add_action( "admin_print_styles-{$this->admin_hook}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 
-		// Hook into the genesis cpt setttings save and add in the CMB2 sanitized values.
+		// Hook into the genesis cpt settings save and add in the CMB2 sanitized values.
 		add_filter( "sanitize_option_genesis-cpt-archive-settings-{$this->post_type}", array( $this, 'add_sanitized_values' ), 999 );
 
 		// Hook up our Genesis metabox.
