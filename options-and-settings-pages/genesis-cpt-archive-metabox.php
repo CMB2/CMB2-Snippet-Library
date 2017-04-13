@@ -119,10 +119,7 @@ class Myprefix_Genesis_CPT_Settings_Metabox {
 		add_action( "admin_print_styles-{$this->admin_hook}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 
 		// Hook into the genesis cpt setttings save and add in the CMB2 sanitized values.
-		add_filter( "sanitize_option_genesis-cpt-archive-settings-{$this->post_type}", array(
-			$this,
-			'add_sanitized_values',
-		), 999 );
+		add_filter( "sanitize_option_genesis-cpt-archive-settings-{$this->post_type}", array( $this, 'add_sanitized_values' ), 999 );
 
 		// Hook up our Genesis metabox.
 		add_action( 'genesis_cpt_archives_settings_metaboxes', array( $this, 'add_meta_box' ) );
@@ -264,4 +261,4 @@ function myprefix_genesis_cpt_settings( $post_type ) {
 }
 
 // Get it started.
-//myprefix_genesis_cpt_settings( 'custom-post-type-slug' );
+// myprefix_genesis_cpt_settings( 'custom-post-type-slug' );
