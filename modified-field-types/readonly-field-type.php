@@ -11,6 +11,7 @@ $cmb->add_field( array(
 	'description' => 'The value of this input should be saved somewhere else.',
 	'id'          => '_jtcmb2_readonly',
 	'type'        => 'text',
+	'save_field'  => false, // Otherwise CMB2 will end up remove the value.
 	'attributes'  => array(
 		'readonly' => 'readonly',
 		'disabled' => 'disabled',
