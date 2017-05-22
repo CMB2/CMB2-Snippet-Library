@@ -154,7 +154,7 @@ add_shortcode( 'cmb-frontend-form', 'wds_do_frontend_form_submission_shortcode' 
 function wds_handle_frontend_new_post_form_submission() {
 
 	// If no form submission, bail
-	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
+	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) || $_POST['object_id'] != 'fake-oject-id' ) {
 		return false;
 	}
 
