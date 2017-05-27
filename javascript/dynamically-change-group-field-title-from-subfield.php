@@ -5,28 +5,23 @@
  * or fall back to the default CMB2 group title method.
  */
 
-add_action( 'cmb2_init', 'yourprefix_register_repeatable_group_field_title_example' );
 /**
  * Hook in and add a metabox to demonstrate repeatable grouped fields
  */
 function yourprefix_register_repeatable_group_field_title_example() {
 
-	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_yourprefix_group_titles_';
-
 	/**
 	 * Repeatable Field Groups
 	 */
 	$cmb_group = new_cmb2_box( array(
-		'id'           => $prefix . 'metabox',
+		'id'           => 'yourprefix_group_titles_metabox',
 		'title'        => __( 'Repeating Field Group with Updating Titles', 'cmb2' ),
 		'object_types' => array( 'page', ),
 		'show_in_rest' => 'read_and_write',
 	) );
 
-	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
 	$group_field_id = $cmb_group->add_field( array(
-		'id'          => $prefix . 'demo',
+		'id'          => 'yourprefix_group_titles_demo',
 		'type'        => 'group',
 		'description' => __( 'Generates reusable form entries', 'cmb2' ),
 		'options'     => array(
@@ -49,18 +44,18 @@ function yourprefix_register_repeatable_group_field_title_example() {
 		'id'   => 'description',
 		'type' => 'textarea_small',
 	) );
-
 }
+add_action( 'cmb2_init', 'yourprefix_register_repeatable_group_field_title_example' );
 
 function yourprefix_add_js_for_repeatable_titles() {
-	add_action( 'admin_footer', 'yourprefix_add_js_for_repeatable_titles_to_footer' );
+	add_action( is_admin() ? 'admin_footer' : 'wp_footer', 'yourprefix_add_js_for_repeatable_titles_to_footer' );
 }
 
 function yourprefix_add_js_for_repeatable_titles_to_footer() {
 	?>
 	<script type="text/javascript">
 	jQuery( function( $ ) {
-		var $box = $( document.getElementById( '_yourprefix_group_titles_metabox' ) );
+		var $box = $( document.getElementById( 'yourprefix_group_titles_metabox' ) );
 
 		var replaceTitles = function() {
 			$box.find( '.cmb-group-title' ).each( function() {
@@ -87,7 +82,6 @@ function yourprefix_add_js_for_repeatable_titles_to_footer() {
 			var id = 'title';
 
 			if ( evt.target.id.indexOf(id, evt.target.id.length - id.length) !== -1 ) {
-				console.log( 'val', $this.val() );
 				$this.parents( '.cmb-row.cmb-repeatable-grouping' ).find( '.cmb-group-title' ).text( $this.val() );
 			}
 		};
