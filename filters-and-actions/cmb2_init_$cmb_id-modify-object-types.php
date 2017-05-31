@@ -1,8 +1,12 @@
 <?php
 /**
- * This file demonstrates modifying (during its "cmb2_init_{$cmb_id}" hook) the object-types registered to a CMB2 box.
+ * This snippet demonstrates modifying (during its "cmb2_init_{$cmb_id}" hook) the object-types
+ * registered to a CMB2 box.
+ *
+ * The "cmb2_init_{$cmb_id}" hook occurs during the initiation of the CMB2 object.
+ *
+ * The dynamic portion of the hook name, $cmb_id, is this meta_box id, so in our example case, "yourprefix_demo_metabox".
  */
-
 function yourprefix_demo_metabox_modify_object_types( $cmb ) {
 
 	$types = $cmb->box_types();
@@ -12,4 +16,4 @@ function yourprefix_demo_metabox_modify_object_types( $cmb ) {
 	// Bam.
 	$cmb->set_prop( 'object_types', $types );
 }
-add_action( 'cmb2_init__yourprefix_demo_metabox', 'yourprefix_demo_metabox_modify_object_types' );
+add_action( 'cmb2_init_yourprefix_demo_metabox', 'yourprefix_demo_metabox_modify_object_types' );
