@@ -11,7 +11,7 @@ function yourprefix_demo_metabox_modify_object_types( $cmb ) {
 
 	$types = $cmb->box_types();
 
-	$types[] = 'jt-books'; // Your custom post type slug.
+	$types[] = 'books'; // Your custom post type slug.
 
 	// Bam.
 	$cmb->set_prop( 'object_types', $types );
