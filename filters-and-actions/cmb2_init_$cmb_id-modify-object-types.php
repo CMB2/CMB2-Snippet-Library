@@ -5,7 +5,7 @@
  *
  * The "cmb2_init_{$cmb_id}" hook occurs during the initiation of the CMB2 object.
  *
- * The dynamic portion of the hook name, $cmb_id, is this meta_box id, so in our example case, "yourprefix_demo_metabox".
+ * The dynamic portion of the hook name, `$cmb_id`, is the registered cmb2 box id, so in our example case: "yourprefix_demo_metabox".
  */
 function yourprefix_demo_metabox_modify_object_types( $cmb ) {
 
