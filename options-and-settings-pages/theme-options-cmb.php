@@ -192,14 +192,14 @@ function myprefix_admin() {
  * @param  mixed  $default Optional default value
  * @return mixed           Option value
  */
-function myprefix_get_option( $key = '', $default = null ) {
+function myprefix_get_option( $key = '', $default = array() ) {
 	if ( function_exists( 'cmb2_get_option' ) ) {
 		// Use cmb2_get_option as it passes through some key filters.
 		return cmb2_get_option( myprefix_admin()->key, $key, $default );
 	}
 
 	// Fallback to get_option if CMB2 is not loaded yet.
-	$opts = get_option( myprefix_admin()->key, $key, $default );
+	$opts = get_option( myprefix_admin()->key, $default );
 
 	$val = $default;
 
