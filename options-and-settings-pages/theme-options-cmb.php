@@ -205,7 +205,7 @@ function myprefix_get_option( $key = '', $default = false ) {
 
 	if ( 'all' == $key ) {
 		$val = $opts;
-	} elseif ( array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+	} elseif ( is_array( $opts ) && array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
 		$val = $opts[ $key ];
 	}
 

@@ -220,13 +220,13 @@ function myprefix_get_network_option( $key = '', $default = null ) {
 	}
 
 	// Fallback to get_option if CMB2 is not loaded yet.
-	$opts = get_option( $opt_key, $key, $default );
+	$opts = get_option( $opt_key, $default );
 
 	$val = $default;
 
 	if ( 'all' == $key ) {
 		$val = $opts;
-	} elseif ( array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+	} elseif ( is_array( $opts ) && array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
 		$val = $opts[ $key ];
 	}
 
