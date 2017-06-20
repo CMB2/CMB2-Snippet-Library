@@ -208,10 +208,11 @@ function myprefix_network_admin() {
 /**
  * Wrapper function around cmb2_get_option
  * @since  0.1.0
- * @param  string  $key Options array key
- * @return mixed        Option value
+ * @param  string $key     Options array key
+ * @param  mixed  $default Optional default value
+ * @return mixed           Option value
  */
-function myprefix_get_network_option( $key = '', $default = null ) {
+function myprefix_get_network_option( $key = '', $default = false ) {
 	$opt_key = myprefix_network_admin()->key;
 
 	if ( function_exists( 'cmb2_get_option' ) ) {
