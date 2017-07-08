@@ -39,6 +39,8 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 			'state'     => '',
 			'zip'       => '',
 			'country'   => '',
+			'file'      => '',
+			'file_id'   => '',
 		) );
 
 		if ( ! $this->field->args( 'do_country' ) ) {
@@ -118,6 +120,15 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 					'desc'  => '',
 				) ); ?>
 			</div>
+		</div>
+		<div class="clear"><p><label for="<?php echo $this->_id( '_file' ); ?>'"><?php echo esc_html( $this->_text( 'address_file_text', 'File' ) ); ?></label></p>
+			<?php echo $this->types->file( array(
+				'name'     => $this->_name( '[file]' ),
+				'id'       => $this->_id( '_file' ),
+				'value'    => $value['file'],
+				'id_value' => $value['file_id'],
+				'desc'     => '',
+			) ); ?>
 		</div>
 		<?php if ( $this->field->args( 'do_country' ) ) : ?>
 		<div class="clear"><p><label for="<?php echo $this->_id( '_country' ); ?>'"><?php echo esc_html( $this->_text( 'address_country_text', 'Country' ) ); ?></label></p>
