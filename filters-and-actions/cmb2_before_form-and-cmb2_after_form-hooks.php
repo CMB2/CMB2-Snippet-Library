@@ -1,10 +1,10 @@
 <?php
 /**
  * This file demonstrates using the following hooks:
- * cmb2_before_form
- * cmb2_after_form
- * cmb2_before_{$object_type}_form_{$cmb_id}
- * cmb2_after_{$object_type}_form_{$cmb_id}
+ * cmb2_before_form and cmb2_before_{$object_type}_form_{$cmb_id}
+ * Docs: https://github.com/CMB2/CMB2/blob/a7b93886e56a9c9f6e78ea0efbe1b01bcbb1a248/includes/CMB2.php#L245-L270
+ * cmb2_after_form and cmb2_after_{$object_type}_form_{$cmb_id}
+ * Docs: https://github.com/CMB2/CMB2/blob/a7b93886e56a9c9f6e78ea0efbe1b01bcbb1a248/includes/CMB2.php#L361-L385
  */
 
 function yourprefix_add_html_before_cmb2_output( $cmb_id, $object_id, $object_type, $cmb ) {
