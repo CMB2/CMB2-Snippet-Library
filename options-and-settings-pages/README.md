@@ -1,7 +1,9 @@
 Options and Settings Pages
 ==========
 
-This class is an example of how you can use CMB2 to create an Admin Theme Options Page. If you want to retrieve an option, use `myprefix_get_option( 'test_text' )`. 
+These snippets demonstrate how to create options page metaboxes or hook into genesis settings metaboxes.
+
+There are also examples for how you can retrieve an option, using `myprefix_get_option( 'test_text' )`. 
 
 Obviously replace all instances of `myprefix` with a unique project-specific prefix.
 
