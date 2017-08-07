@@ -1,208 +1,64 @@
 <?php
 /**
- * CMB2 Network Settings
- * @version 0.1.0
+ * This snippet has been updated to reflect the official supporting of options pages by CMB2
+ * in version 2.2.5.
+ *
+ * If you are using the old version of the network options-page registration,
+ * it is recommended you swtich to this method.
  */
-class Myprefix_Network_Admin {
-
-	/**
- 	 * Option key, and option page slug
- 	 * @var string
- 	 */
-	private $key = 'myprefix_options';
-
-	/**
- 	 * Settings page metabox id
- 	 * @var string
- 	 */
-	private $metabox_id = 'myprefix_option_metabox';
-
-	/**
-	 * Settings Page title
-	 * @var string
-	 */
-	protected $title = '';
-
-	/**
-	 * Settings Page hook
-	 * @var string
-	 */
-	protected $options_page = '';
-
-	/**
-	 * Holds an instance of the project
-	 *
-	 * @Myprefix_Network_Admin
-	 **/
-	private static $instance = null;
-
-	/**
-	 * Constructor
-	 * @since 0.1.0
-	 */
-	private function __construct() {
-		// Set our title
-		$this->title = __( 'Network Settings', 'myprefix' );
-	}
-
-	/**
-	 * Get the running object
-	 *
-	 * @return Myprefix_Network_Admin
-	 **/
-	public static function get_instance() {
-		if( is_null( self::$instance ) ) {
-			self::$instance = new self();
-			self::$instance->hooks();
-		}
-		return self::$instance;
-	}
-
-	/**
-	 * Initiate our hooks
-	 * @since 0.1.0
-	 */
-	public function hooks() {
-		add_action( 'admin_init', array( $this, 'init' ) );
-		add_action( 'network_admin_menu', array( $this, 'add_options_page' ) );
-		add_action( 'cmb2_admin_init', array( $this, 'add_options_page_metabox' ) );
-
-		// Override CMB's getter
-		add_filter( 'cmb2_override_option_get_'. $this->key, array( $this, 'get_override' ), 10, 2 );
-		// Override CMB's setter
-		add_filter( 'cmb2_override_option_save_'. $this->key, array( $this, 'update_override' ), 10, 2 );
-	}
-
-	/**
-	 * Register our setting to WP
-	 * @since  0.1.0
-	 */
-	public function init() {
-		register_setting( $this->key, $this->key );
-	}
-
-	/**
-	 * Add menu options page
-	 * @since 0.1.0
-	 */
-	public function add_options_page() {
-		$this->options_page = add_menu_page( $this->title, $this->title, 'manage_options', $this->key, array( $this, 'admin_page_display' ) );
-
-		// add_action( "admin_head-{$this->options_page}", array( $this, 'enqueue_js' ) );
-		// Include CMB CSS in the head to avoid FOUC
-		add_action( "admin_print_styles-{$this->options_page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
-	}
-
-	/**
-	 * Admin page markup. Mostly handled by CMB2
-	 * @since  0.1.0
-	 */
-	public function admin_page_display() {
-		?>
-		<div class="wrap cmb2-options-page <?php echo $this->key; ?>">
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
-			<?php cmb2_metabox_form( $this->metabox_id, $this->key ); ?>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Add the options metabox to the array of metaboxes
-	 * @since  0.1.0
-	 */
-	function add_options_page_metabox() {
-
-		// hook in our save notices
-		add_action( "cmb2_save_options-page_fields_{$this->metabox_id}", array( $this, 'settings_notices' ), 10, 2 );
-
-		$cmb = new_cmb2_box( array(
-			'id'         => $this->metabox_id,
-			'hookup'     => false,
-			'cmb_styles' => false,
-			'show_on'    => array(
-				// These are important, don't remove
-				'key'   => 'options-page',
-				'value' => array( $this->key, )
-			),
-		) );
-
-		// Set our CMB2 fields
-
-		$cmb->add_field( array(
-			'name' => __( 'Test Text', 'myprefix' ),
-			'desc' => __( 'field description (optional)', 'myprefix' ),
-			'id'   => 'test_text',
-			'type' => 'text',
-			'default' => 'Default Text',
-		) );
-
-		$cmb->add_field( array(
-			'name'    => __( 'Test Color Picker', 'myprefix' ),
-			'desc'    => __( 'field description (optional)', 'myprefix' ),
-			'id'      => 'test_colorpicker',
-			'type'    => 'colorpicker',
-			'default' => '#bada55',
-		) );
-
-	}
-
-	/**
-	 * Register settings notices for display
-	 *
-	 * @since  0.1.0
-	 * @param  int   $object_id Option key
-	 * @param  array $updated   Array of updated fields
-	 * @return void
-	 */
-	public function settings_notices( $object_id, $updated ) {
-		if ( $object_id !== $this->key || empty( $updated ) ) {
-			return;
-		}
-
-		add_settings_error( $this->key . '-notices', '', __( 'Settings updated.', 'myprefix' ), 'updated' );
-		settings_errors( $this->key . '-notices' );
-	}
-
-	/**
-	 * Replaces get_option with get_site_option
-	 * @since  0.1.0
-	 */
-	public function get_override( $test, $default = false ) {
-		return get_site_option( $this->key, $default );
-	}
-
-	/**
-	 * Replaces update_option with update_site_option
-	 * @since  0.1.0
-	 */
-	public function update_override( $test, $option_value ) {
-		return update_site_option( $this->key, $option_value );
-	}
-
-	/**
-	 * Public getter method for retrieving protected/private variables
-	 * @since  0.1.0
-	 * @param  string  $field Field to retrieve
-	 * @return mixed          Field value or exception is thrown
-	 */
-	public function __get( $field ) {
-		// Allowed fields to retrieve
-		if ( in_array( $field, array( 'key', 'metabox_id', 'title', 'options_page' ), true ) ) {
-			return $this->{$field};
-		}
-
-		throw new Exception( 'Invalid property: ' . $field );
-	}
-
-}
-
+add_action( 'cmb2_admin_init', 'myprefix_register_network_options_metabox' );
 /**
- * Helper function to get/return the Myprefix_Network_Admin object
- * @since  0.1.0
- * @return Myprefix_Network_Admin object
+ * Hook in and register a metabox to handle a theme options page and adds a menu item.
  */
-function myprefix_network_admin() {
-	return Myprefix_Network_Admin::get_instance();
+function myprefix_register_network_options_metabox() {
+
+	/**
+	 * Registers options page menu item and form.
+	 */
+	$cmb_options = new_cmb2_box( array(
+		'id'           => 'myprefix_network_option_metabox',
+		'title'        => esc_html__( 'Network Setting', 'myprefix' ),
+		'object_types' => array( 'options-page' ),
+
+		/*
+		 * The following parameters are specific to the options-page box
+		 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
+		 */
+
+		'option_key'      => 'myprefix_network_options', // The option key and admin menu page slug.
+		// 'icon_url'        => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
+		// 'menu_title'      => esc_html__( 'Options', 'myprefix' ), // Falls back to 'title' (above).
+		// 'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
+		// 'capability'      => 'manage_options', // Cap required to view options-page.
+		// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
+		'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
+		// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
+		// 'save_button'     => esc_html__( 'Save Theme Options', 'myprefix' ), // The text for the options-page save button. Defaults to 'Save'.
+	) );
+
+	/*
+	 * Options fields ids only need
+	 * to be unique within this box.
+	 * Prefix is not needed.
+	 */
+
+	$cmb_options->add_field( array(
+		'name' => __( 'Test Text', 'myprefix' ),
+		'desc' => __( 'field description (optional)', 'myprefix' ),
+		'id'   => 'test_text',
+		'type' => 'text',
+		'default' => 'Default Text',
+	) );
+
+	$cmb_options->add_field( array(
+		'name'    => __( 'Test Color Picker', 'myprefix' ),
+		'desc'    => __( 'field description (optional)', 'myprefix' ),
+		'id'      => 'test_colorpicker',
+		'type'    => 'colorpicker',
+		'default' => '#bada55',
+	) );
+
+
 }
 
 /**
@@ -213,15 +69,13 @@ function myprefix_network_admin() {
  * @return mixed           Option value
  */
 function myprefix_get_network_option( $key = '', $default = false ) {
-	$opt_key = myprefix_network_admin()->key;
-
 	if ( function_exists( 'cmb2_get_option' ) ) {
 		// Use cmb2_get_option as it passes through some key filters.
-		return cmb2_get_option( $opt_key, $key, $default );
+		return cmb2_get_option( 'myprefix_network_options', $key, $default );
 	}
 
-	// Fallback to get_option if CMB2 is not loaded yet.
-	$opts = get_option( $opt_key, $default );
+	// Fallback to get_site_option if CMB2 is not loaded yet.
+	$opts = get_site_option( 'myprefix_network_options', $default );
 
 	$val = $default;
 
@@ -233,6 +87,3 @@ function myprefix_get_network_option( $key = '', $default = false ) {
 
 	return $val;
 }
-
-// Get it started
-myprefix_network_admin();
