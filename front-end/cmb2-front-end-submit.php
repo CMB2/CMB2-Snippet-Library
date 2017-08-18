@@ -19,20 +19,24 @@ function yourprefix_frontend_form_register() {
 		'name'    => __( 'New Post Title', 'YOURTEXTDOMAIN' ),
 		'id'      => 'submitted_post_title',
 		'type'    => 'text',
-		'default' => __( 'New Post', 'YOURTEXTDOMAIN' ),
+		'default' => ! empty( $_POST['submitted_post_title'] )
+			? $_POST['submitted_post_title']
+			: __( 'New Post', 'YOURTEXTDOMAIN' ),
 	) );
 
 	$cmb->add_field( array(
-		'name'    => __( 'New Post Content', 'YOURTEXTDOMAIN' ),
-		'id'      => 'submitted_post_content',
-		'type'    => 'wysiwyg',
-		'options' => array(
+		'default_cb' => 'yourprefix_maybe_set_default_from_posted_values',
+		'name'       => __( 'New Post Content', 'YOURTEXTDOMAIN' ),
+		'id'         => 'submitted_post_content',
+		'type'       => 'wysiwyg',
+		'options'    => array(
 			'textarea_rows' => 12,
 			'media_buttons' => false,
 		),
 	) );
 
 	$cmb->add_field( array(
+		'default_cb' => 'yourprefix_maybe_set_default_from_posted_values',
 		'name'       => __( 'Featured Image for New Post', 'YOURTEXTDOMAIN' ),
 		'id'         => 'submitted_post_thumbnail',
 		'type'       => 'text',
@@ -42,28 +46,44 @@ function yourprefix_frontend_form_register() {
 	) );
 
 	$cmb->add_field( array(
-		'name'     => __( 'Categories', 'YOURTEXTDOMAIN' ),
-		'id'       => 'submitted_categories',
-		'type'     => 'taxonomy_multicheck',
-		'taxonomy' => 'category', // Taxonomy Slug
+		'default_cb' => 'yourprefix_maybe_set_default_from_posted_values',
+		'name'       => __( 'Categories', 'YOURTEXTDOMAIN' ),
+		'id'         => 'submitted_categories',
+		'type'       => 'taxonomy_multicheck',
+		'taxonomy'   => 'category', // Taxonomy Slug
 	) );
 
 	$cmb->add_field( array(
-		'name' => __( 'Your Name', 'YOURTEXTDOMAIN' ),
-		'desc' => __( 'Please enter your name for author credit on the new post.', 'YOURTEXTDOMAIN' ),
-		'id'   => 'submitted_author_name',
-		'type' => 'text',
+		'default_cb' => 'yourprefix_maybe_set_default_from_posted_values',
+		'name'       => __( 'Your Name', 'YOURTEXTDOMAIN' ),
+		'desc'       => __( 'Please enter your name for author credit on the new post.', 'YOURTEXTDOMAIN' ),
+		'id'         => 'submitted_author_name',
+		'type'       => 'text',
 	) );
 
 	$cmb->add_field( array(
-		'name' => __( 'Your Email', 'YOURTEXTDOMAIN' ),
-		'desc' => __( 'Please enter your email so we can contact you if we use your post.', 'YOURTEXTDOMAIN' ),
-		'id'   => 'submitted_author_email',
-		'type' => 'text_email',
+		'default_cb' => 'yourprefix_maybe_set_default_from_posted_values',
+		'name'       => __( 'Your Email', 'YOURTEXTDOMAIN' ),
+		'desc'       => __( 'Please enter your email so we can contact you if we use your post.', 'YOURTEXTDOMAIN' ),
+		'id'         => 'submitted_author_email',
+		'type'       => 'text_email',
 	) );
 
 }
 add_action( 'cmb2_init', 'yourprefix_frontend_form_register' );
+
+/**
+ * Sets the front-end-post-form field values if form has already been submitted.
+ *
+ * @return string
+ */
+function yourprefix_maybe_set_default_from_posted_values( $args, $field ) {
+	if ( ! empty( $_POST[ $field->id() ] ) ) {
+		return $_POST[ $field->id() ];
+	}
+
+	return '';
+}
 
 /**
  * Gets the front-end-post-form cmb instance
