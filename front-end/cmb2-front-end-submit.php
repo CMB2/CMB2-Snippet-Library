@@ -7,7 +7,7 @@
 /**
  * Register the form and fields for our front-end submission form
  */
-function wds_frontend_form_register() {
+function yourprefix_frontend_form_register() {
 	$cmb = new_cmb2_box( array(
 		'id'           => 'front-end-post-form',
 		'object_types' => array( 'post' ),
@@ -16,14 +16,14 @@ function wds_frontend_form_register() {
 	) );
 
 	$cmb->add_field( array(
-		'name'    => __( 'New Post Title', 'wds-post-submit' ),
+		'name'    => __( 'New Post Title', 'YOURTEXTDOMAIN' ),
 		'id'      => 'submitted_post_title',
 		'type'    => 'text',
-		'default' => __( 'New Post', 'wds-post-submit' ),
+		'default' => __( 'New Post', 'YOURTEXTDOMAIN' ),
 	) );
 
 	$cmb->add_field( array(
-		'name'    => __( 'New Post Content', 'wds-post-submit' ),
+		'name'    => __( 'New Post Content', 'YOURTEXTDOMAIN' ),
 		'id'      => 'submitted_post_content',
 		'type'    => 'wysiwyg',
 		'options' => array(
@@ -33,7 +33,7 @@ function wds_frontend_form_register() {
 	) );
 
 	$cmb->add_field( array(
-		'name'       => __( 'Featured Image for New Post', 'wds-post-submit' ),
+		'name'       => __( 'Featured Image for New Post', 'YOURTEXTDOMAIN' ),
 		'id'         => 'submitted_post_thumbnail',
 		'type'       => 'text',
 		'attributes' => array(
@@ -42,36 +42,36 @@ function wds_frontend_form_register() {
 	) );
 
 	$cmb->add_field( array(
-		'name'     => __( 'Categories', 'wds-post-submit' ),
+		'name'     => __( 'Categories', 'YOURTEXTDOMAIN' ),
 		'id'       => 'submitted_categories',
 		'type'     => 'taxonomy_multicheck',
 		'taxonomy' => 'category', // Taxonomy Slug
 	) );
 
 	$cmb->add_field( array(
-		'name' => __( 'Your Name', 'wds-post-submit' ),
-		'desc' => __( 'Please enter your name for author credit on the new post.', 'wds-post-submit' ),
+		'name' => __( 'Your Name', 'YOURTEXTDOMAIN' ),
+		'desc' => __( 'Please enter your name for author credit on the new post.', 'YOURTEXTDOMAIN' ),
 		'id'   => 'submitted_author_name',
 		'type' => 'text',
 	) );
 
 	$cmb->add_field( array(
-		'name' => __( 'Your Email', 'wds-post-submit' ),
-		'desc' => __( 'Please enter your email so we can contact you if we use your post.', 'wds-post-submit' ),
+		'name' => __( 'Your Email', 'YOURTEXTDOMAIN' ),
+		'desc' => __( 'Please enter your email so we can contact you if we use your post.', 'YOURTEXTDOMAIN' ),
 		'id'   => 'submitted_author_email',
 		'type' => 'text_email',
 	) );
 
 }
-add_action( 'cmb2_init', 'wds_frontend_form_register' );
+add_action( 'cmb2_init', 'yourprefix_frontend_form_register' );
 
 /**
  * Gets the front-end-post-form cmb instance
  *
  * @return CMB2 object
  */
-function wds_frontend_cmb2_get() {
-	// Use ID of metabox in wds_frontend_form_register
+function yourprefix_frontend_cmb2_get() {
+	// Use ID of metabox in yourprefix_frontend_form_register
 	$metabox_id = 'front-end-post-form';
 
 	// Post/object ID is not applicable since we're using this form for submission
@@ -82,15 +82,15 @@ function wds_frontend_cmb2_get() {
 }
 
 /**
- * Handle the cmb-frontend-form shortcode
+ * Handle the cmb_frontend_form shortcode
  *
  * @param  array  $atts Array of shortcode attributes
  * @return string       Form html
  */
-function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
+function yourprefix_do_frontend_form_submission_shortcode( $atts = array() ) {
 
 	// Get CMB2 metabox object
-	$cmb = wds_frontend_cmb2_get();
+	$cmb = yourprefix_frontend_cmb2_get();
 
 	// Get $cmb object_types
 	$post_types = $cmb->prop( 'object_types' );
@@ -103,7 +103,7 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 		'post_author' => $user_id ? $user_id : 1, // Current user, or admin
 		'post_status' => 'pending',
 		'post_type'   => reset( $post_types ), // Only use first object_type in array
-	), $atts, 'cmb-frontend-form' );
+	), $atts, 'cmb_frontend_form' );
 
 	/*
 	 * Let's add these attributes as hidden fields to our cmb form
@@ -125,7 +125,7 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 	// Get any submission errors
 	if ( ( $error = $cmb->prop( 'submission_error' ) ) && is_wp_error( $error ) ) {
 		// If there was an error with the submission, add it to our ouput.
-		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'wds-post-submit' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
+		$output .= '<h3>' . sprintf( __( 'There was an error in the submission: %s', 'YOURTEXTDOMAIN' ), '<strong>'. $error->get_error_message() .'</strong>' ) . '</h3>';
 	}
 
 	// If the post was submitted successfully, notify the user.
@@ -136,22 +136,22 @@ function wds_do_frontend_form_submission_shortcode( $atts = array() ) {
 		$name = $name ? ' '. $name : '';
 
 		// Add notice of submission to our output
-		$output .= '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'wds-post-submit' ), esc_html( $name ) ) . '</h3>';
+		$output .= '<h3>' . sprintf( __( 'Thank you%s, your new post has been submitted and is pending review by a site administrator.', 'YOURTEXTDOMAIN' ), esc_html( $name ) ) . '</h3>';
 	}
 
 	// Get our form
-	$output .= cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Post', 'wds-post-submit' ) ) );
+	$output .= cmb2_get_metabox_form( $cmb, 'fake-oject-id', array( 'save_button' => __( 'Submit Post', 'YOURTEXTDOMAIN' ) ) );
 
 	return $output;
 }
-add_shortcode( 'cmb-frontend-form', 'wds_do_frontend_form_submission_shortcode' );
+add_shortcode( 'cmb_frontend_form', 'yourprefix_do_frontend_form_submission_shortcode' );
 
 /**
  * Handles form submission on save. Redirects if save is successful, otherwise sets an error message as a cmb property
  *
  * @return void
  */
-function wds_handle_frontend_new_post_form_submission() {
+function yourprefix_handle_frontend_new_post_form_submission() {
 
 	// If no form submission, bail
 	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
@@ -159,7 +159,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	}
 
 	// Get CMB2 metabox object
-	$cmb = wds_frontend_cmb2_get();
+	$cmb = yourprefix_frontend_cmb2_get();
 
 	$post_data = array();
 
@@ -215,7 +215,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	unset( $post_data['post_status'] );
 
 	// Try to upload the featured image
-	$img_id = wds_frontend_form_photo_upload( $new_submission_id, $post_data );
+	$img_id = yourprefix_frontend_form_photo_upload( $new_submission_id, $post_data );
 
 	// If our photo upload was successful, set the featured image
 	if ( $img_id && ! is_wp_error( $img_id ) ) {
@@ -229,7 +229,7 @@ function wds_handle_frontend_new_post_form_submission() {
 	wp_redirect( esc_url_raw( add_query_arg( 'post_submitted', $new_submission_id ) ) );
 	exit;
 }
-add_action( 'cmb2_after_init', 'wds_handle_frontend_new_post_form_submission' );
+add_action( 'cmb2_after_init', 'yourprefix_handle_frontend_new_post_form_submission' );
 
 /**
  * Handles uploading a file to a WordPress post
@@ -237,7 +237,7 @@ add_action( 'cmb2_after_init', 'wds_handle_frontend_new_post_form_submission' );
  * @param  int   $post_id              Post ID to upload the photo to
  * @param  array $attachment_post_data Attachement post-data array
  */
-function wds_frontend_form_photo_upload( $post_id, $attachment_post_data = array() ) {
+function yourprefix_frontend_form_photo_upload( $post_id, $attachment_post_data = array() ) {
 	// Make sure the right files were submitted
 	if (
 		empty( $_FILES )
