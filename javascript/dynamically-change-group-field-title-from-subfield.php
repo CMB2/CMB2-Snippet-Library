@@ -87,9 +87,7 @@ function yourprefix_add_js_for_repeatable_titles_to_footer() {
 		};
 
 		$box
-			.on( 'cmb2_add_row cmb2_shift_rows_complete', function( evt ) {
-				replaceTitles();
-			})
+			.on( 'cmb2_add_row cmb2_shift_rows_complete', replaceTitles )
 			.on( 'keyup', replaceOnKeyUp );
 
 		replaceTitles();
