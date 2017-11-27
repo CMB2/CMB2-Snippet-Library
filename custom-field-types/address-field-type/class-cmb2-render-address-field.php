@@ -64,7 +64,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 		ob_start();
 		// Do html
 		?>
-		<div><p><label for="<?php echo $this->_id( '_address_1' ); ?>"><?php echo esc_html( $this->_text( 'address_address_1_text', 'Address 1' ) ); ?></label></p>
+		<div><p><label for="<?php echo $this->_id( '_address_1', false ); ?>"><?php echo esc_html( $this->_text( 'address_address_1_text', 'Address 1' ) ); ?></label></p>
 			<?php echo $this->types->input( array(
 				'name'  => $this->_name( '[address-1]' ),
 				'id'    => $this->_id( '_address_1' ),
@@ -72,7 +72,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 				'desc'  => '',
 			) ); ?>
 		</div>
-		<div><p><label for="<?php echo $this->_id( '_address_2' ); ?>'"><?php echo esc_html( $this->_text( 'address_address_2_text', 'Address 2' ) ); ?></label></p>
+		<div><p><label for="<?php echo $this->_id( '_address_2', false ); ?>'"><?php echo esc_html( $this->_text( 'address_address_2_text', 'Address 2' ) ); ?></label></p>
 			<?php echo $this->types->input( array(
 				'name'  => $this->_name( '[address-2]' ),
 				'id'    => $this->_id( '_address_2' ),
@@ -81,7 +81,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 			) ); ?>
 		</div>
 		<div style="overflow: hidden;">
-			<div class="alignleft"><p><label for="<?php echo $this->_id( '_city' ); ?>'"><?php echo esc_html( $this->_text( 'address_city_text', 'City' ) ); ?></label></p>
+			<div class="alignleft"><p><label for="<?php echo $this->_id( '_city', false ); ?>'"><?php echo esc_html( $this->_text( 'address_city_text', 'City' ) ); ?></label></p>
 				<?php echo $this->types->input( array(
 					'class' => 'cmb_text_small',
 					'name'  => $this->_name( '[city]' ),
@@ -90,7 +90,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 					'desc'  => '',
 				) ); ?>
 			</div>
-			<div class="alignleft"><p><label for="<?php echo $this->_id( '_state' ); ?>'"><?php echo esc_html( $this->_text( 'address_state_text', $state_label ) ); ?></label></p>
+			<div class="alignleft"><p><label for="<?php echo $this->_id( '_state', false ); ?>'"><?php echo esc_html( $this->_text( 'address_state_text', $state_label ) ); ?></label></p>
 				<?php if ( $this->field->args( 'do_country' ) ) : ?>
 					<?php echo $this->types->input( array(
 						'class' => 'cmb_text_small',
@@ -108,7 +108,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 					) ); ?>
 				<?php endif; ?>
 			</div>
-			<div class="alignleft"><p><label for="<?php echo $this->_id( '_zip' ); ?>'"><?php echo esc_html( $this->_text( 'address_zip_text', 'Zip' ) ); ?></label></p>
+			<div class="alignleft"><p><label for="<?php echo $this->_id( '_zip', false ); ?>'"><?php echo esc_html( $this->_text( 'address_zip_text', 'Zip' ) ); ?></label></p>
 				<?php echo $this->types->input( array(
 					'class' => 'cmb_text_small',
 					'name'  => $this->_name( '[zip]' ),
@@ -120,7 +120,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 			</div>
 		</div>
 		<?php if ( $this->field->args( 'do_country' ) ) : ?>
-		<div class="clear"><p><label for="<?php echo $this->_id( '_country' ); ?>'"><?php echo esc_html( $this->_text( 'address_country_text', 'Country' ) ); ?></label></p>
+		<div class="clear"><p><label for="<?php echo $this->_id( '_country', false ); ?>'"><?php echo esc_html( $this->_text( 'address_country_text', 'Country' ) ); ?></label></p>
 			<?php echo $this->types->input( array(
 				'name'  => $this->_name( '[country]' ),
 				'id'    => $this->_id( '_country' ),
