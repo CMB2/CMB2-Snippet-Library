@@ -42,7 +42,7 @@ function jt_cmb2_get_address_field( $metakey, $post_id = 0 ) {
 	) );
 
 	$output = '<div class="cmb2-address">';
-	$output .= '<p><strongAddress:</strong> ' . esc_html( $address['address-1'] ) . '</p>';
+	$output .= '<p><strong>Address:</strong> ' . esc_html( $address['address-1'] ) . '</p>';
 	if ( $address['address-2'] ) {
 		$output .= '<p>' . esc_html( $address['address-2'] ) . '</p>';
 	}
