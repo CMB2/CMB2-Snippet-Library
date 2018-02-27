@@ -19,7 +19,7 @@ function yourprefix_feat_img_fields() {
 			'left'  => 'Left',
 			'right' => 'Right',
 		),
-		'after' => '<style>
+		'before' => '<style>
 		#cmb2-metabox-feat-image-fields .cmb-th,
 		#cmb2-metabox-feat-image-fields .cmb-td,
 		#side-sortables .cmb2-wrap #cmb2-metabox-feat-image-fields .cmb-row {
