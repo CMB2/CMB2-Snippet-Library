@@ -22,6 +22,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 		 */
 		add_filter( 'cmb2_sanitize_address', array( __CLASS__, 'sanitize' ), 10, 5 );
 		add_filter( 'cmb2_types_esc_address', array( __CLASS__, 'escape' ), 10, 4 );
+		add_filter( 'cmb2_override_meta_value', array( __CLASS__, 'get_split_meta_value' ), 12, 4 );
 	}
 
 	public static function class_name() { return __CLASS__; }
@@ -188,4 +189,33 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 		return array_filter($meta_value);
 	}
 
+	public function get_split_meta_value( $data, $object_id, $field_args, $field ) {
+		if ( 'address' !== $field->args['type'] ) {
+			return $data;
+		}
+		if ( ! isset( $field->args['split_values'] ) || ! $field->args['split_values'] ) {
+			// Don't do the override.
+			return $data;
+		}
+
+		$prefix = $field->args['id'] . 'addr_';
+		// Construct an array to iterate to fetch individual meta values for our override.
+		// Should match the values in the render() method.
+		$metakeys = array(
+			'address-1',
+			'address-2',
+			'city',
+			'state',
+			'zip',
+			'country',
+		);
+
+		$newdata = array();
+		foreach ( $metakeys as $metakey ) {
+			// Use our prefix to construct the whole meta key from the postmeta table.
+			$newdata[ $metakey ] = get_post_meta( $object_id, $prefix . $metakey, true );
+		}
+
+		return $newdata;
+	}
 }
