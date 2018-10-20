@@ -147,6 +147,9 @@ function autocomplete_cmb2_render_autocomplete($field_object, $escaped_value, $o
 
 	// Set up the autocomplete field.  Replace the '_' with '-' to not interfere with the ID from CMB2.
 	$id = str_replace('_', '-', $field_object->args['id']);
+	if ( '_' !== substr( $field_object->args['id'], 0, 1 ) ) {
+		$id = '-' . $field_object->args['id'];
+	}
 
 	// Don't use the ID on repeatable elements as it won't change; use the class instead.
 	echo '<input size="50"'.(empty($repeatable_class) ? ' id="'.$id.'"' : '') . ' value="'.htmlspecialchars($value).'"'.
