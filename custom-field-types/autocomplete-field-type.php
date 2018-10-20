@@ -276,8 +276,7 @@ function autocomplete_cmb2_get_post_options_using_post_type($post_type, $include
  * Gets the jQuery autocomplete widget ready.
  */
 function autocomplete_cmb2_admin_enqueue_scripts() {
-	wp_enqueue_script('wp-jquery-ui-autocomplete');
-	wp_enqueue_style('wp-jquery-ui-autocomplete');
+	wp_enqueue_script('jquery-ui-autocomplete');
 }
 
 /**
