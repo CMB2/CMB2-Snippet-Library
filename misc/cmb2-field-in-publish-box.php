@@ -13,7 +13,6 @@
   */
  function yourprefix_bootstrap() {
 	add_action( 'post_submitbox_misc_actions', 'yourprefix_filter_publish_box' );
-	add_action( 'save_post', 'yourprefix_save_publish_conditions', 10, 3 );
 	add_action( 'cmb2_admin_init', 'yourprefix_cmb2_fields' );
  }
  
@@ -49,39 +48,7 @@ function yourprefix_filter_publish_box( $post ) {
 		$cmb->show_form();
 	}
 }
-
-/**
- * Save the CMB2 publish condition metadata.
- *
- * @param  int    $post_id The WP_Post ID.
- * @param  object $post    The WP_Post object.
- * @param  bool   $update  Whether the post is a revision.
- * @return void
- */
-function yourprefix_save_publish_conditions( $post_id, $post, $update ) {
-
-	// Check if the current post type is in the array of allowed object types for the CMB2 field.
-	if ( ! in_array( $post->post_type, [ 'post' ] true ) ) {
-		return;
-	}
-
-	if ( wp_is_post_revision( $post ) ) {
-		return;
-	}
-
-	$prefix = '_yourprefix_';
-	$cmb    = cmb2_get_metabox( $prefix . 'publish_box' );
-
-	// Save the post meta.
-	if (
-		isset( $_POST[ $prefix . 'state' ] ) &&
-		isset( $_POST[ $cmb->nonce() ] ) &&
-		wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $cmb->nonce() ] ) ), $cmb->nonce() )
-	) {
-		update_post_meta( $post_id, $prefix . 'state', sanitize_text_field( wp_unslash( $_POST[ $prefix . 'field' ] ) ) );
-	}
-}
  
- // Engage!
- yourprefix_bootstrap();
+// Engage!
+yourprefix_bootstrap();
  
