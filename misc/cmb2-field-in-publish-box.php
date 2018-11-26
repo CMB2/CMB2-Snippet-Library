@@ -8,14 +8,6 @@
  * @link   https://codex.wordpress.org/Plugin_API/Action_Reference/post_submitbox_misc_actions
  */
  
- /**
-  * Kick off all the things.
-  */
- function yourprefix_bootstrap() {
-	add_action( 'post_submitbox_misc_actions', 'yourprefix_filter_publish_box' );
-	add_action( 'cmb2_admin_init', 'yourprefix_cmb2_fields' );
- }
- 
 /**
  * Register the CMB2 metabox.
  */
@@ -35,6 +27,8 @@ function yourprefix_cmb2_fields() {
 		'type' => 'text', // Any valid CMB2 field type.
 	] );
 }
+
+add_action( 'post_submitbox_misc_actions', 'yourprefix_filter_publish_box' );
  
 /**
  * Display the CMB2 form in the WordPress publish metabox.
@@ -48,7 +42,5 @@ function yourprefix_filter_publish_box( $post ) {
 		$cmb->show_form();
 	}
 }
- 
-// Engage!
-yourprefix_bootstrap();
- 
+
+add_action( 'cmb2_admin_init', 'yourprefix_cmb2_fields' );
