@@ -74,7 +74,7 @@ function yourprefix_save_publish_conditions( $post_id, $post, $update ) {
 
 	// Save the post meta.
 	if (
-		isset( $_POST[ $prefix . 'state' ] ) &
+		isset( $_POST[ $prefix . 'state' ] ) &&
 		isset( $_POST[ $cmb->nonce() ] ) &&
 		wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ $cmb->nonce() ] ) ), $cmb->nonce() )
 	) {
