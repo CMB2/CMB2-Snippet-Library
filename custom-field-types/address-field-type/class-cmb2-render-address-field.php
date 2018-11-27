@@ -189,7 +189,7 @@ class CMB2_Render_Address_Field extends CMB2_Type_Base {
 		return array_filter( $meta_value );
 	}
 
-	public function get_split_meta_value( $data, $object_id, $field_args, $field ) {
+	public static function get_split_meta_value( $data, $object_id, $field_args, $field ) {
 		if ( 'address' !== $field->args['type'] ) {
 			return $data;
 		}
