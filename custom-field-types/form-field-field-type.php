@@ -5,6 +5,27 @@
  * Author: jtsternberg
  * Author URI: http://dsgnwrks.pro
  * Version: 0.1.0
+ *
+ * Example use with translation of strings:
+ *
+ * $cmb_demo->add_field( array(
+ *		'name'       => 'Campos',
+ *		'desc'       => 'Adiciona campos ao formulário',
+ *		'id'         => '_form_fields',
+ *		'type'       => 'formfield',
+ *		'repeatable' => true,
+ *		'text'       => array(
+ *			'add_row_text'                       => 'Adicionar Campo',
+ *			'formfield_field_id_label'           => 'ID do Campo',
+ *			'formfield_field_label_label'        => 'Título do campo',
+ *			'formfield_field_type_label'         => 'Tipo do campo',
+ *			'formfield_field_size_label'         => 'Tamanho do campo',
+ *			'formfield_text_field_option_label'  => 'Texto',
+ *			'formfield_email_field_option_label' => 'Email',
+ *			'formfield_money_field_option_label' => 'Dinheiro',
+ *			'formfield_date_field_option_label'  => 'Data',
+ *		),
+ *	) );
  */
 
 
