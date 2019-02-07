@@ -9,23 +9,24 @@
  * Example use with translation of strings:
  *
  * $cmb_demo->add_field( array(
- *		'name'       => 'Campos',
- *		'desc'       => 'Adiciona campos ao formulário',
- *		'id'         => '_form_fields',
- *		'type'       => 'formfield',
- *		'repeatable' => true,
- *		'text'       => array(
- *			'add_row_text'                       => 'Adicionar Campo',
- *			'formfield_field_id_label'           => 'ID do Campo',
- *			'formfield_field_label_label'        => 'Título do campo',
- *			'formfield_field_type_label'         => 'Tipo do campo',
- *			'formfield_field_size_label'         => 'Tamanho do campo',
- *			'formfield_text_field_option_label'  => 'Texto',
- *			'formfield_email_field_option_label' => 'Email',
- *			'formfield_money_field_option_label' => 'Dinheiro',
- *			'formfield_date_field_option_label'  => 'Data',
- *		),
- *	) );
+ *     'name'       => 'Campos',
+ *     'desc'       => 'Adiciona campos ao formulário',
+ *     'id'         => '_form_fields',
+ *     'type'       => 'formfield',
+ *     'repeatable' => true,
+ *     'text'       => array(
+ *         'add_row_text'                       => 'Adicionar Campo',
+ *         'formfield_field_id_label'           => 'ID do Campo',
+ *         'formfield_field_label_label'        => 'Título do campo',
+ *         'formfield_field_type_label'         => 'Tipo do campo',
+ *         'formfield_field_size_label'         => 'Tamanho do campo',
+ *         'formfield_text_field_option_label'  => 'Texto',
+ *         'formfield_email_field_option_label' => 'Email',
+ *         'formfield_money_field_option_label' => 'Dinheiro',
+ *         'formfield_date_field_option_label'  => 'Data',
+ *     ),
+ * ) );
+ *
  */
 
 
@@ -69,7 +70,6 @@ function jt_cmb2_render_formfield_field_callback( $field, $value, $object_id, $o
 		$types    .= "<option value=\"{$type}\" {$selected}>{$label}</option>";
 	}
 
-	echo '<xmp>'. __FILE__ .') $value: '. print_r( $value, true ) .'</xmp>';
 	?>
 	<table>
 		<tr>
