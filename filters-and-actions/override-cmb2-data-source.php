@@ -89,6 +89,7 @@ function yourprefix_group_alt_data_demo_override_meta_save( $override, $args, $f
 
 add_filter( 'cmb2_override_yourprefix_group_alt_data_demo_meta_remove', 'yourprefix_group_alt_data_demo_override_meta_remove', 10, 4 );
 function yourprefix_group_alt_data_demo_override_meta_remove( $override, $args, $field_args, $field ) {
+
 	// Here, we're removing from the options table, but you can query to remove from any data source here.
 	// If from a custom table, you can use the $args['id'] to query against.
 	// (If we do "delete_option", then our default value will be re-applied, which isn't desired.)
