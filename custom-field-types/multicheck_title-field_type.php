@@ -1,9 +1,14 @@
 <?php
-//By Daniele Mte90 Scasciafratte
-//Is multicheck but with section title
 
+/**
+ * CMB2 Multicheck by Title
+ *
+ * @package CMB2 Default Tags field/metabox
+ * @author Daniele Mte90 Scasciafratte
+ */
+ 
 /*
-//How to use
+// Example
 $array[ 'id_of_the_key' ] = __( 'ID of the key' );
 $fields[ 'Title of the section' ] = $array;
 $cmb->add_field( array(
