@@ -73,7 +73,7 @@ if ( ! class_exists( 'CMB2_Field_Textarea_With_Checkbox' ) ) {
         }
       }
       
-      return array_filter( $new_values );
+      return array_filter( array_values( $new_values ) );
     }
 
     /**
@@ -91,7 +91,7 @@ if ( ! class_exists( 'CMB2_Field_Textarea_With_Checkbox' ) ) {
         }
       }
       
-      return array_filter( $new_values );
+      return array_filter( array_values( $new_values ) );
     }
   }
 
