@@ -31,7 +31,7 @@ function add_html_before_yourprefix_demo_metabox_output( $cmb_id, $object_id, $o
 	echo '<div class="my-custom-wrapper">';
 	echo '<h4>Welcome to my metabox!</h4>';
 
-	add_action( "cmb2_after_{$object_id}_form_{$cmb_id}", 'add_html_after_yourprefix_demo_metabox_output', 10, 4 );
+	add_action( "cmb2_after_{$object_type}_form_{$cmb_id}", 'add_html_after_yourprefix_demo_metabox_output', 10, 4 );
 }
 // Only output above the _yourprefix_demo_metabox metabox.
 add_action( 'cmb2_before_post_form__yourprefix_demo_metabox', 'add_html_before_yourprefix_demo_metabox_output', 10, 4 );
