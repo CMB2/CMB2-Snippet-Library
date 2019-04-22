@@ -43,11 +43,11 @@ function js_limit_field_repeat( $post_id, $cmb ) {
 		};
 
 		var disableAdder = function() {
-			$repeatWrap.parents( '.cmb-repeat.table-layout' ).find('.cmb-add-row-button.button').prop( 'disabled', true );
+			$repeatWrap.parents( '.cmb-repeat.table-layout' ).find('.cmb-add-row-button').prop( 'disabled', true );
 		};
 
 		var enableAdder = function() {
-			$repeatWrap.parents( '.cmb-repeat.table-layout' ).find('.cmb-add-row-button.button').prop( 'disabled', false );
+			$repeatWrap.parents( '.cmb-repeat.table-layout' ).find('.cmb-add-row-button').prop( 'disabled', false );
 		};
 
 		$fieldTable

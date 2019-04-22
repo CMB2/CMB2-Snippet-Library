@@ -62,11 +62,11 @@ function js_limit_group_repeat( $post_id, $cmb ) {
 		};
 
 		var disableAdder = function() {
-			$fieldGroupTable.find('.cmb-add-group-row.button').prop( 'disabled', true );
+			$fieldGroupTable.find('.cmb-add-group-row').prop( 'disabled', true );
 		};
 
 		var enableAdder = function() {
-			$fieldGroupTable.find('.cmb-add-group-row.button').prop( 'disabled', false );
+			$fieldGroupTable.find('.cmb-add-group-row').prop( 'disabled', false );
 		};
 
 		$fieldGroupTable
