@@ -64,10 +64,18 @@ function js_limit_group_repeat( $post_id, $cmb ) {
 		var disableAdder = function() {
 			$fieldGroupTable.find('.cmb-add-group-row').prop( 'disabled', true );
 		};
+		
+		if ( countRows() >= limit ) {
+			disableAdder();
+		}			
 
 		var enableAdder = function() {
 			$fieldGroupTable.find('.cmb-add-group-row').prop( 'disabled', false );
 		};
+		
+		if ( countRows() < limit ) {
+                	enableAdder();
+            	}
 
 		$fieldGroupTable
 			.on( 'cmb2_add_row', function() {
