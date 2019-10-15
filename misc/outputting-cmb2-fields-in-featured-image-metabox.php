@@ -34,7 +34,7 @@ add_action( 'cmb2_admin_init', 'yourprefix_feat_img_fields' );
 function yourprefix_feat_img_output_fields( $content, $post_id, $thumbnail_id ) {
 	$cmb = cmb2_get_metabox( 'feat-image-fields' );
 
-	if ( in_array( get_post_type(), $cmb->prop( 'object_types' ), 1 ) ) {
+	if ( $cmb && in_array( get_post_type(), $cmb->prop( 'object_types' ), 1 ) ) {
 		ob_start();
 		$cmb->show_form();
 		// grab the data from the output buffer and add it to our $content variable
