@@ -5,7 +5,7 @@
  */
 
 function dj_taxonomy_radio_with_image_field_type_class_name() {
-	$class_name = 'DJ_Taxonomy_Radio_With_Image';
+	$class_name = 'DJ_Taxonomy_Radio_Hierarchical_With_Image';
 
 	require_once dirname( __FILE__ ) . '/'. $class_name .'.php';
 
