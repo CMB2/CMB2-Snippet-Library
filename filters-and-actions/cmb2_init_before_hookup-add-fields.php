@@ -27,7 +27,6 @@ function yourprefix_add_new_field_in_3rd_position() {
 				'type'       => 'text',
 				'attributes' => array( 'placeholder' => __( "I'm some placeholder text", 'your_textdomain' ) ),
 			),
-			'', // This field should not be appended to any group field
 			3 // Insert this field in the third position
 		);
 
@@ -40,7 +39,7 @@ function yourprefix_add_new_field_to_group() {
 	// Try to get a metabox w/ the id of '_yourprefix_group_metabox'
 	if ( $cmb_group_demo = cmb2_get_metabox( '_yourprefix_group_metabox' ) ) {
 
-		$cmb_group_demo->add_field(
+		$cmb_group_demo->add_group_field(
 			array(
 				'name'       => __( 'Test Text 2', 'your_textdomain' ),
 				'desc'       => __( 'field description (optional)', 'your_textdomain' ),

@@ -12,7 +12,6 @@ function yourprefix_add_new_field_to_top_of_demo_metabox( $cmb ) {
 			'id'   => '_new_at_the_top',
 			'type' => 'text',
 		),
-		'',
 		1
 	);
 
