@@ -81,7 +81,7 @@ function yourprefix_register_main_options_metabox() {
 	$tertiary_options->add_field( array(
 		'name' => esc_html__( 'Test Text Area for Code', 'cmb2' ),
 		'desc' => esc_html__( 'field description (optional)', 'cmb2' ),
-		'id'   => $prefix . 'textarea_code',
+		'id'   => 'textarea_code',
 		'type' => 'textarea_code',
 	) );
 
