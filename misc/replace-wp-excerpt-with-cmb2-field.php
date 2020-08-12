@@ -33,7 +33,7 @@ add_action( 'cmb2_admin_init', 'cmb2_register_excerpt_replacement_box' );
  * Remove the default WordPress excerpt field.
  */
 function cmb2_admin_hide_excerpt_field() {
-	add_action( 'dbx_post_advanced', '_cmb2_admin_hide_excerpt_field' );
+	add_action( 'add_meta_boxes', '_cmb2_admin_hide_excerpt_field' );
 }
 add_filter( 'admin_init', 'cmb2_admin_hide_excerpt_field' );
 
