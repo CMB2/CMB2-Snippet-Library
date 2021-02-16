@@ -158,3 +158,13 @@ function wporg_options_page_html() {
 	</div>
 	<?php
 }
+
+function wporg_options_page_to_cmb2_tabs( $tabs, $tab_group ) {
+	if ( 'yourprefix_theme_options' === $tab_group ) {
+		$tabs['wporg'] = 'WPOrg';
+	}
+
+	return $tabs;
+}
+
+add_filter( 'cmb2_tab_group_tabs', 'wporg_options_page_to_cmb2_tabs', 10, 2 );
