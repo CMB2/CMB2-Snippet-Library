@@ -174,7 +174,7 @@ add_shortcode( 'cmb_frontend_form', 'yourprefix_do_frontend_form_submission_shor
 function yourprefix_handle_frontend_new_post_form_submission() {
 
 	// If no form submission, bail
-	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) ) {
+	if ( empty( $_POST ) || ! isset( $_POST['submit-cmb'], $_POST['object_id'] ) || $_POST['object_id'] != 'fake-oject-id' ) {
 		return false;
 	}
 
