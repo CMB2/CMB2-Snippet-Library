@@ -1,4 +1,4 @@
-#Contribute To CMB2 Code Snippet Library
+# Contribute To CMB2 Code Snippet Library
 
 The CMB2 code snippet library is a community-maintained repository and so contributions are always welcome. Thanks to EDD for [the inspiration](https://github.com/easydigitaldownloads/library) for this library.
 
